@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - E-Commerce Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation (Same as index.html) -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-800">ShopNow</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-800 hover:text-blue-600">Home</a>
+                    <a href="shop.html" class="text-gray-800 hover:text-blue-600">Shop</a>
+                    <a href="blog.html" class="text-gray-800 hover:text-blue-600">Blog</a>
+                    <a href="about.html" class="text-gray-800 hover:text-blue-600">About</a>
+                    <a href="contact.html" class="text-gray-800 hover:text-blue-600">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="text-gray-800 hover:text-blue-600">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs">0</span>
+                    </a>
+                    <a href="login.html" id="login-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
+                    <a href="admin/dashboard.html" id="dashboard-btn" class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Dashboard</a>
+                    <button id="logout-btn" class="hidden bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shop Content -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <div class="w-full md:w-64 bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-4">Filters</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium mb-2">Categories</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="electronics">
+                                <span class="ml-2">Electronics</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="clothing">
+                                <span class="ml-2">Clothing</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox" value="books">
+                                <span class="ml-2">Books</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-medium mb-2">Price Range</h4>
+                        <div class="space-y-2">
+                            <input type="range" min="0" max="1000" class="w-full" id="price-range">
+                            <div class="flex justify-between">
+                                <span>$0</span>
+                                <span>$1000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-medium mb-2">Rating</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="radio" name="rating" class="form-radio" value="4">
+                                <span class="ml-2">4★ & up</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="rating" class="form-radio" value="3">
+                                <span class="ml-2">3★ & up</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="rating" class="form-radio" value="2">
+                                <span class="ml-2">2★ & up</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <section class="py-12">
+                <div class="max-w-6xl mx-auto px-4">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-3xl font-bold">All Products</h2>
+                        <div class="flex items-center space-x-4">
+                            <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
+                            <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="default">Default</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Rating</option>
+                                <option value="name">Name</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer (Same as index.html) -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">ShopNow</h3>
+                    <p class="text-gray-400">Your one-stop shop for all your needs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Shop</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: info@shopnow.com</li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Shopping St, Retail City</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Sort products function
+        function sortProducts(products, sortBy) {
+            switch(sortBy) {
+                case 'price-low':
+                    return [...products].sort((a, b) => a.price - b.price);
+                case 'price-high':
+                    return [...products].sort((a, b) => b.price - a.price);
+                case 'rating':
+                    return [...products].sort((a, b) => b.rating - a.rating);
+                case 'name':
+                    return [...products].sort((a, b) => a.title.localeCompare(b.title));
+                default:
+                    return products;
+            }
+        }
+
+        // Display sorted products
+        function displaySortedProducts() {
+            const sortSelect = document.getElementById('sort-select');
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const sortedProducts = sortProducts(products, sortSelect.value);
+            displayProducts('products-grid', sortedProducts);
+        }
+
+        // Initialize shop page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial display
+            displaySortedProducts();
+
+            // Add sort change listener
+            document.getElementById('sort-select').addEventListener('change', displaySortedProducts);
+        });
+    </script>
+</body>
+</html> 

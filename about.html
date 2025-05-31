@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - E-Commerce Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation (Same as other pages) -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-gray-800">ShopNow</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-800 hover:text-blue-600">Home</a>
+                    <a href="shop.html" class="text-gray-800 hover:text-blue-600">Shop</a>
+                    <a href="blog.html" class="text-gray-800 hover:text-blue-600">Blog</a>
+                    <a href="about.html" class="text-gray-800 hover:text-blue-600">About</a>
+                    <a href="contact.html" class="text-gray-800 hover:text-blue-600">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="text-gray-800 hover:text-blue-600">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs">0</span>
+                    </a>
+                    <a href="login.html" id="login-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
+                    <a href="admin/dashboard.html" id="dashboard-btn" class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Dashboard</a>
+                    <button id="logout-btn" class="hidden bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-blue-600 text-white">
+        <div class="max-w-6xl mx-auto px-4 py-16">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4">About ShopNow</h1>
+                <p class="text-xl">Your trusted destination for quality products and exceptional service</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Story -->
+    <div class="max-w-6xl mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Our Story</h2>
+                <p class="text-gray-600 mb-4">
+                    Founded in 2020, ShopNow has grown from a small startup to one of the leading e-commerce platforms. 
+                    Our journey began with a simple mission: to provide customers with high-quality products at competitive prices.
+                </p>
+                <p class="text-gray-600 mb-4">
+                    Today, we serve millions of customers worldwide, offering a vast selection of products across various categories. 
+                    Our commitment to customer satisfaction and quality service remains at the heart of everything we do.
+                </p>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800" alt="Our story" class="rounded-lg shadow-lg">
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Values -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Values</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Customer First</h3>
+                    <p class="text-gray-600">
+                        We prioritize our customers' needs and satisfaction above all else, ensuring a seamless shopping experience.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Quality Assurance</h3>
+                    <p class="text-gray-600">
+                        We maintain strict quality standards for all our products, ensuring you receive only the best.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Sustainability</h3>
+                    <p class="text-gray-600">
+                        We are committed to sustainable practices and reducing our environmental impact.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="max-w-6xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Team</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400" alt="Team member" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold">John Smith</h3>
+                <p class="text-gray-600">CEO & Founder</p>
+            </div>
+            <div class="text-center">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400" alt="Team member" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold">Sarah Johnson</h3>
+                <p class="text-gray-600">Head of Operations</p>
+            </div>
+            <div class="text-center">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400" alt="Team member" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold">Michael Chen</h3>
+                <p class="text-gray-600">Technical Director</p>
+            </div>
+            <div class="text-center">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400" alt="Team member" class="w-48 h-48 object-cover rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold">Emily Davis</h3>
+                <p class="text-gray-600">Customer Experience</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Same as other pages) -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">ShopNow</h3>
+                    <p class="text-gray-400">Your one-stop shop for all your needs.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Shop</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: info@shopnow.com</li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Shopping St, Retail City</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

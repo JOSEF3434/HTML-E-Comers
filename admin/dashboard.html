@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - E-Commerce Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Admin Navigation -->
+    <nav class="bg-gray-800 text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="../index.html" class="text-2xl font-bold">ShopNow Admin</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="admin-email" class="text-gray-300"></span>
+                    <button id="logout-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold mb-4">Admin Menu</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-blue-600" onclick="showSection('products')">
+                                <i class="fas fa-box mr-2"></i>Products
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('orders')">
+                                <i class="fas fa-shopping-cart mr-2"></i>Orders
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('customers')">
+                                <i class="fas fa-users mr-2"></i>Customers
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('blog')">
+                                <i class="fas fa-blog mr-2"></i>Blog Posts
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('analytics')">
+                                <i class="fas fa-chart-bar mr-2"></i>Analytics
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="md:col-span-3">
+                <!-- Products Section -->
+                <div id="products-section" class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Products</h2>
+                        <button onclick="showAddProductModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-plus mr-2"></i>Add Product
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <!-- Products will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div id="orders-section" class="hidden bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6">Orders</h2>
+                    <div class="mb-4">
+                        <select id="order-status-filter" class="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" aria-label="Filter orders by status">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="paid">Paid</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Status</th>
+                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table-body">
+                                <!-- Orders will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Customers Section -->
+                <div id="customers-section" class="hidden bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6">Customers</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Order</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-table-body">
+                                <!-- Customers will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Blog Posts Section -->
+                <div id="blog-section" class="hidden bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Blog Posts</h2>
+                        <button onclick="showAddBlogPostModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-plus mr-2"></i>Add Post
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="blog-posts-table-body">
+                                <!-- Blog posts will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analytics-section" class="hidden bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6">Analytics</h2>
+                    
+                    <!-- Time Period Selector -->
+                    <div class="mb-6">
+                        <select id="analytics-period" class="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" aria-label="Select analytics time period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-blue-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold mb-2">Total Sales</h3>
+                            <p id="total-sales" class="text-3xl font-bold text-blue-600">$0</p>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold mb-2">Total Orders</h3>
+                            <p id="total-orders" class="text-3xl font-bold text-green-600">0</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold mb-2">Total Customers</h3>
+                            <p id="total-customers" class="text-3xl font-bold text-purple-600">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-lg font-semibold mb-4">Sales Trend</h3>
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-lg font-semibold mb-4">Order Distribution</h3>
+                            <canvas id="orders-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Table -->
+                    <div class="bg-white rounded-lg shadow">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sales</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customers</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analytics-table-body">
+                                <!-- Analytics data will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="add-product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Add New Product</h3>
+                <button onclick="hideAddProductModal()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="add-product-form" class="space-y-4">
+                <div>
+                    <label for="product-title" class="block text-sm font-medium text-gray-700">Product Title</label>
+                    <input type="text" id="product-title" name="title" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter product title">
+                </div>
+                <div>
+                    <label for="product-price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <input type="number" id="product-price" name="price" step="0.01" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter product price">
+                </div>
+                <div>
+                    <label for="product-description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="product-description" name="description" rows="3" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter product description"></textarea>
+                </div>
+                <div>
+                    <label for="product-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <input type="url" id="product-image" name="image" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter image URL">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="hideAddProductModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="edit-product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Edit Product</h3>
+                <button onclick="hideEditProductModal()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="edit-product-form" class="space-y-4">
+                <input type="hidden" id="edit-product-id">
+                <div>
+                    <label for="edit-product-title" class="block text-sm font-medium text-gray-700">Product Title</label>
+                    <input type="text" id="edit-product-title" name="title" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter product title">
+                </div>
+                <div>
+                    <label for="edit-product-price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <input type="number" id="edit-product-price" name="price" step="0.01" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter product price">
+                </div>
+                <div>
+                    <label for="edit-product-description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="edit-product-description" name="description" rows="3" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter product description"></textarea>
+                </div>
+                <div>
+                    <label for="edit-product-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <input type="url" id="edit-product-image" name="image" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter image URL">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="hideEditProductModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Blog Post Modal -->
+    <div id="add-blog-post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Add New Blog Post</h3>
+                <button onclick="hideAddBlogPostModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="add-blog-post-form" class="space-y-4">
+                <div>
+                    <label for="post-title" class="block text-sm font-medium text-gray-700">Title</label>
+                    <input type="text" id="post-title" name="title" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter post title">
+                </div>
+                <div>
+                    <label for="post-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="post-category" name="category" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Select a category</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Health">Health</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="post-content" class="block text-sm font-medium text-gray-700">Content</label>
+                    <textarea id="post-content" name="content" rows="6" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Write your blog post content"></textarea>
+                </div>
+                <div>
+                    <label for="post-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <input type="url" id="post-image" name="image" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter image URL">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="hideAddBlogPostModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Publish Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Blog Post Modal -->
+    <div id="edit-blog-post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Edit Blog Post</h3>
+                <button onclick="hideEditBlogPostModal()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="edit-blog-post-form" class="space-y-4">
+                <input type="hidden" id="edit-post-id">
+                <div>
+                    <label for="edit-post-title" class="block text-sm font-medium text-gray-700">Title</label>
+                    <input type="text" id="edit-post-title" name="title" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter post title">
+                </div>
+                <div>
+                    <label for="edit-post-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="edit-post-category" name="category" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Select a category</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Health">Health</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="edit-post-content" class="block text-sm font-medium text-gray-700">Content</label>
+                    <textarea id="edit-post-content" name="content" rows="6" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Write your blog post content"></textarea>
+                </div>
+                <div>
+                    <label for="edit-post-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <input type="url" id="edit-post-image" name="image" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter image URL">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="hideEditBlogPostModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Check if user is logged in and is admin
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const userRole = localStorage.getItem('userRole');
+            
+            if (!isLoggedIn || userRole !== 'admin') {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userRole');
+                window.location.href = '/index.html';
+            }
+        }
+
+        // Check auth on page load
+        checkAuth();
+
+        // Display admin email
+        document.getElementById('admin-email').textContent = 'admin@shopnow.com';
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userRole');
+            window.location.href = '/index.html';
+        });
+
+        // Show/hide sections
+        function showSection(sectionId) {
+            document.querySelectorAll('[id$="-section"]').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+        }
+
+        // Add Product Modal
+        function showAddProductModal() {
+            document.getElementById('add-product-modal').classList.remove('hidden');
+            document.getElementById('add-product-modal').classList.add('flex');
+        }
+
+        function hideAddProductModal() {
+            document.getElementById('add-product-modal').classList.add('hidden');
+            document.getElementById('add-product-modal').classList.remove('flex');
+            document.getElementById('add-product-form').reset();
+        }
+
+        // Product Management Functions
+        function getProducts() {
+            return JSON.parse(localStorage.getItem('products')) || [];
+        }
+
+        function saveProducts(products) {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        function addNewProduct(product) {
+            const products = getProducts();
+            const newId = Math.max(...products.map(p => p.id), 0) + 1;
+            const newProduct = {
+                ...product,
+                id: newId,
+                rating: 0,
+                reviews: []
+            };
+            products.push(newProduct);
+            saveProducts(products);
+            return newId;
+        }
+
+        function updateExistingProduct(productId, updatedProduct) {
+            const products = getProducts();
+            const index = products.findIndex(p => p.id === productId);
+            if (index !== -1) {
+                products[index] = { ...products[index], ...updatedProduct };
+                saveProducts(products);
+                return true;
+            }
+            return false;
+        }
+
+        function removeProduct(productId) {
+            const products = getProducts();
+            const index = products.findIndex(p => p.id === productId);
+            if (index !== -1) {
+                products.splice(index, 1);
+                saveProducts(products);
+                return true;
+            }
+            return false;
+        }
+
+        // Display products in the admin dashboard
+        function displayAdminProducts() {
+            const productsTableBody = document.getElementById('products-table-body');
+            if (!productsTableBody) return;
+
+            const products = getProducts();
+            
+            productsTableBody.innerHTML = products.map(product => `
+                <tr>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <img src="${product.images[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${product.title}</div>
+                                <div class="text-sm text-gray-500">${product.description.substring(0, 50)}...</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-900">$${product.price.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${product.rating.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-sm font-medium">
+                        <button onclick="editProduct(${product.id})" class="text-blue-600 hover:text-blue-800 mr-2">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Add new product
+        document.getElementById('add-product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newProduct = {
+                title: document.getElementById('product-title').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                description: document.getElementById('product-description').value,
+                images: [document.getElementById('product-image').value]
+            };
+
+            addNewProduct(newProduct);
+            displayAdminProducts();
+            hideAddProductModal();
+            showNotification('Product added successfully!');
+        });
+
+        // Edit Product Modal Functions
+        function showEditProductModal() {
+            document.getElementById('edit-product-modal').classList.remove('hidden');
+            document.getElementById('edit-product-modal').classList.add('flex');
+        }
+
+        function hideEditProductModal() {
+            document.getElementById('edit-product-modal').classList.add('hidden');
+            document.getElementById('edit-product-modal').classList.remove('flex');
+            document.getElementById('edit-product-form').reset();
+        }
+
+        // Edit product
+        function editProduct(productId) {
+            const products = getProducts();
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            document.getElementById('edit-product-id').value = product.id;
+            document.getElementById('edit-product-title').value = product.title;
+            document.getElementById('edit-product-price').value = product.price;
+            document.getElementById('edit-product-description').value = product.description;
+            document.getElementById('edit-product-image').value = product.images[0];
+
+            showEditProductModal();
+        }
+
+        // Update product
+        document.getElementById('edit-product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const productId = parseInt(document.getElementById('edit-product-id').value);
+            const updatedProduct = {
+                title: document.getElementById('edit-product-title').value,
+                price: parseFloat(document.getElementById('edit-product-price').value),
+                description: document.getElementById('edit-product-description').value,
+                images: [document.getElementById('edit-product-image').value]
+            };
+
+            if (updateExistingProduct(productId, updatedProduct)) {
+                displayAdminProducts();
+                hideEditProductModal();
+                showNotification('Product updated successfully!');
+            }
+        });
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                if (removeProduct(productId)) {
+                    displayAdminProducts();
+                    showNotification('Product deleted successfully!');
+                }
+            }
+        }
+
+        // Orders Management
+        function getOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            // Ensure each order has required fields
+            return orders.map(order => ({
+                id: order.id || Math.floor(Math.random() * 1000),
+                date: order.date || new Date().toISOString(),
+                customerName: order.customerName || 'Guest Customer',
+                customerId: order.customerId || 'guest',
+                items: order.items || [],
+                subtotal: order.subtotal || 0,
+                tax: order.tax || 0,
+                shipping: order.shipping || 5.00,
+                total: order.total || 0,
+                status: order.status || 'pending',
+                paymentStatus: order.paymentStatus || 'pending',
+                paymentDate: order.paymentDate || null
+            }));
+        }
+
+        function displayOrders() {
+            const orders = getOrders();
+            const statusFilter = document.getElementById('order-status-filter').value;
+            
+            // Sort orders by date (newest first)
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Filter orders by status if needed
+            const filteredOrders = statusFilter === 'all' 
+                ? orders 
+                : orders.filter(order => order.status === statusFilter);
+
+            const ordersTableBody = document.getElementById('orders-table-body');
+            if (filteredOrders.length === 0) {
+                ordersTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+                            No orders found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            ordersTableBody.innerHTML = filteredOrders.map(order => `
+                <tr>
+                    <td class="px-6 py-4 text-sm text-gray-900">${new Date(order.date).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">#${order.id}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${order.customerName}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${order.items.length} items</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">$${order.total.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold
+                            ${order.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' : 
+                              order.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-red-100 text-red-800'}">
+                            ${order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium">
+                        <button onclick="viewOrderDetails(${order.id})" class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Update order status
+        function updateOrderStatus(orderId, newStatus) {
+            const orders = getOrders();
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = newStatus;
+                if (newStatus === 'paid') {
+                    orders[orderIndex].paymentStatus = 'paid';
+                    orders[orderIndex].paymentDate = new Date().toISOString();
+                } else if (newStatus === 'cancelled') {
+                    orders[orderIndex].paymentStatus = 'cancelled';
+                }
+                localStorage.setItem('orders', JSON.stringify(orders));
+                displayOrders();
+                updateAnalytics();
+            }
+        }
+
+        // View Order Details
+        function viewOrderDetails(orderId) {
+            const orders = getOrders();
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const itemsList = order.items.map(item => 
+                `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
+            ).join('\n');
+
+            alert(`
+Order Details:
+ID: #${order.id}
+Date: ${new Date(order.date).toLocaleDateString()}
+Customer: ${order.customerName}
+Status: ${order.status}
+Payment Status: ${order.paymentStatus}
+${order.paymentDate ? 'Payment Date: ' + new Date(order.paymentDate).toLocaleDateString() : ''}
+
+Items:
+${itemsList}
+
+Subtotal: $${order.subtotal.toFixed(2)}
+Tax: $${order.tax.toFixed(2)}
+Shipping: $${order.shipping.toFixed(2)}
+Total: $${order.total.toFixed(2)}
+            `);
+        }
+
+        // Analytics Functions
+        function updateAnalytics() {
+            const period = document.getElementById('analytics-period').value;
+            const orders = getOrders();
+            
+            // Calculate totals
+            const totalSales = orders.filter(order => order.paymentStatus === 'paid')
+                .reduce((sum, order) => sum + (order.total || 0), 0);
+            const totalOrders = orders.length;
+            const paidOrders = orders.filter(order => order.paymentStatus === 'paid').length;
+            const cancelledOrders = orders.filter(order => order.paymentStatus === 'cancelled').length;
+            const uniqueCustomers = new Set(orders.map(order => order.customerId)).size;
+
+            // Update summary cards
+            document.getElementById('total-sales').textContent = `$${totalSales.toFixed(2)}`;
+            document.getElementById('total-orders').textContent = totalOrders;
+            document.getElementById('total-customers').textContent = uniqueCustomers;
+
+            // Group data by period
+            const groupedData = groupDataByPeriod(orders, period);
+            
+            // Update charts
+            updateSalesChart(groupedData);
+            updateOrdersChart(groupedData);
+            
+            // Update detailed table
+            updateAnalyticsTable(groupedData);
+        }
+
+        function groupDataByPeriod(orders, period) {
+            const grouped = {};
+            
+            orders.forEach(order => {
+                const date = new Date(order.date);
+                let key;
+                
+                switch(period) {
+                    case 'daily':
+                        key = date.toLocaleDateString();
+                        break;
+                    case 'weekly':
+                        const weekStart = new Date(date);
+                        weekStart.setDate(date.getDate() - date.getDay());
+                        key = weekStart.toLocaleDateString();
+                        break;
+                    case 'monthly':
+                        key = `${date.getMonth() + 1}/${date.getFullYear()}`;
+                        break;
+                }
+                
+                if (!grouped[key]) {
+                    grouped[key] = {
+                        sales: 0,
+                        orders: 0,
+                        paidOrders: 0,
+                        cancelledOrders: 0,
+                        customers: new Set()
+                    };
+                }
+                
+                if (order.paymentStatus === 'paid') {
+                    grouped[key].sales += order.total || 0;
+                    grouped[key].paidOrders += 1;
+                }
+                if (order.paymentStatus === 'cancelled') {
+                    grouped[key].cancelledOrders += 1;
+                }
+                grouped[key].orders += 1;
+                grouped[key].customers.add(order.customerId);
+            });
+            
+            return grouped;
+        }
+
+        function updateSalesChart(data) {
+            const ctx = document.getElementById('sales-chart').getContext('2d');
+            const labels = Object.keys(data);
+            const sales = labels.map(key => data[key].sales);
+            
+            // Destroy existing chart if it exists
+            if (window.salesChart) {
+                window.salesChart.destroy();
+            }
+            
+            window.salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sales',
+                        data: sales,
+                        borderColor: 'rgb(59, 130, 246)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateOrdersChart(data) {
+            const ctx = document.getElementById('orders-chart').getContext('2d');
+            const labels = Object.keys(data);
+            const orders = labels.map(key => data[key].orders);
+            
+            // Destroy existing chart if it exists
+            if (window.ordersChart) {
+                window.ordersChart.destroy();
+            }
+            
+            window.ordersChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Orders',
+                        data: orders,
+                        backgroundColor: 'rgb(16, 185, 129)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateAnalyticsTable(data) {
+            const tableBody = document.getElementById('analytics-table-body');
+            if (Object.keys(data).length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                            No data available
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = Object.entries(data).map(([period, stats]) => `
+                <tr>
+                    <td class="px-6 py-4 text-sm text-gray-900">${period}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">$${stats.sales.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${stats.orders}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${stats.customers.size}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Event Listeners
+        document.getElementById('order-status-filter').addEventListener('change', displayOrders);
+        document.getElementById('analytics-period').addEventListener('change', updateAnalytics);
+
+        // Initialize sections
+        function showSection(sectionId) {
+            document.querySelectorAll('[id$="-section"]').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+            
+            if (sectionId === 'orders') {
+                displayOrders();
+            } else if (sectionId === 'analytics') {
+                updateAnalytics();
+            } else if (sectionId === 'customers') {
+                displayCustomers();
+            } else if (sectionId === 'blog') {
+                displayBlogPosts();
+            }
+        }
+
+        // Initialize the dashboard
+        displayAdminProducts();
+        displayOrders(); // Display orders on initial load
+        updateAnalytics(); // Update analytics on initial load
+
+        // Customers Management
+        function getCustomers() {
+            const orders = getOrders();
+            const customers = new Map();
+
+            // Process each order to gather customer information
+            orders.forEach(order => {
+                const customerId = order.customerId;
+                if (!customers.has(customerId)) {
+                    customers.set(customerId, {
+                        id: customerId,
+                        name: order.customerName,
+                        email: localStorage.getItem(`user_${customerId}_email`) || 'N/A',
+                        orders: [],
+                        totalSpent: 0,
+                        lastOrderDate: null
+                    });
+                }
+
+                const customer = customers.get(customerId);
+                customer.orders.push(order);
+                if (order.paymentStatus === 'paid') {
+                    customer.totalSpent += order.total;
+                }
+                if (!customer.lastOrderDate || new Date(order.date) > new Date(customer.lastOrderDate)) {
+                    customer.lastOrderDate = order.date;
+                }
+            });
+
+            return Array.from(customers.values());
+        }
+
+        function displayCustomers() {
+            const customers = getCustomers();
+            const customersTableBody = document.getElementById('customers-table-body');
+
+            if (customers.length === 0) {
+                customersTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                            No customers found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            customersTableBody.innerHTML = customers.map(customer => `
+                <tr>
+                    <td class="px-6 py-4 text-sm text-gray-900">${customer.name}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${customer.email}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${customer.orders.length}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">$${customer.totalSpent.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocaleDateString() : 'N/A'}</td>
+                    <td class="px-6 py-4 text-sm font-medium">
+                        <button onclick="viewCustomerDetails('${customer.id}')" class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function viewCustomerDetails(customerId) {
+            const customers = getCustomers();
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+
+            const ordersList = customer.orders.map(order => `
+Order #${order.id} (${new Date(order.date).toLocaleDateString()})
+Status: ${order.paymentStatus}
+Items: ${order.items.length}
+Total: $${order.total.toFixed(2)}
+-------------------`).join('\n');
+
+            alert(`
+Customer Details:
+Name: ${customer.name}
+Email: ${customer.email}
+Customer ID: ${customer.id}
+
+Order History:
+${ordersList}
+
+Total Orders: ${customer.orders.length}
+Total Spent: $${customer.totalSpent.toFixed(2)}
+Last Order: ${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocaleDateString() : 'N/A'}
+            `);
+        }
+
+        // Blog Management Functions
+        function getBlogPosts() {
+            return JSON.parse(localStorage.getItem('blogPosts')) || [];
+        }
+
+        function saveBlogPosts(posts) {
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+        }
+
+        function displayBlogPosts() {
+            const posts = getBlogPosts();
+            const postsTableBody = document.getElementById('blog-posts-table-body');
+
+            if (posts.length === 0) {
+                postsTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                            No blog posts found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            postsTableBody.innerHTML = posts.map(post => `
+                <tr>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <img src="${post.image}" alt="${post.title}" class="w-16 h-16 object-cover rounded">
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${post.title}</div>
+                                <div class="text-sm text-gray-500">${post.content.substring(0, 50)}...</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${post.category}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${new Date(post.date).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                            Published
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium">
+                        <button onclick="editBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800 mr-2">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button onclick="deleteBlogPost(${post.id})" class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddBlogPostModal() {
+            document.getElementById('add-blog-post-modal').classList.remove('hidden');
+            document.getElementById('add-blog-post-modal').classList.add('flex');
+        }
+
+        function hideAddBlogPostModal() {
+            document.getElementById('add-blog-post-modal').classList.add('hidden');
+            document.getElementById('add-blog-post-modal').classList.remove('flex');
+            document.getElementById('add-blog-post-form').reset();
+        }
+
+        // Add new blog post
+        document.getElementById('add-blog-post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const posts = getBlogPosts();
+            const newPost = {
+                id: Math.max(...posts.map(p => p.id), 0) + 1,
+                title: document.getElementById('post-title').value,
+                category: document.getElementById('post-category').value,
+                content: document.getElementById('post-content').value,
+                image: document.getElementById('post-image').value,
+                date: new Date().toISOString(),
+                author: localStorage.getItem('userName') || 'Admin'
+            };
+
+            posts.push(newPost);
+            saveBlogPosts(posts);
+            displayBlogPosts();
+            hideAddBlogPostModal();
+            showNotification('Blog post added successfully!');
+        });
+
+        // Edit Blog Post Functions
+        function showEditBlogPostModal() {
+            document.getElementById('edit-blog-post-modal').classList.remove('hidden');
+            document.getElementById('edit-blog-post-modal').classList.add('flex');
+        }
+
+        function hideEditBlogPostModal() {
+            document.getElementById('edit-blog-post-modal').classList.add('hidden');
+            document.getElementById('edit-blog-post-modal').classList.remove('flex');
+            document.getElementById('edit-blog-post-form').reset();
+        }
+
+        function editBlogPost(postId) {
+            const posts = getBlogPosts();
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            document.getElementById('edit-post-id').value = post.id;
+            document.getElementById('edit-post-title').value = post.title;
+            document.getElementById('edit-post-category').value = post.category;
+            document.getElementById('edit-post-content').value = post.content;
+            document.getElementById('edit-post-image').value = post.image;
+
+            showEditBlogPostModal();
+        }
+
+        // Update blog post
+        document.getElementById('edit-blog-post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const postId = parseInt(document.getElementById('edit-post-id').value);
+            const posts = getBlogPosts();
+            const postIndex = posts.findIndex(p => p.id === postId);
+            
+            if (postIndex !== -1) {
+                posts[postIndex] = {
+                    ...posts[postIndex],
+                    title: document.getElementById('edit-post-title').value,
+                    category: document.getElementById('edit-post-category').value,
+                    content: document.getElementById('edit-post-content').value,
+                    image: document.getElementById('edit-post-image').value,
+                    lastUpdated: new Date().toISOString()
+                };
+
+                saveBlogPosts(posts);
+                displayBlogPosts();
+                hideEditBlogPostModal();
+                showNotification('Blog post updated successfully!');
+            }
+        });
+
+        function deleteBlogPost(postId) {
+            if (confirm('Are you sure you want to delete this blog post?')) {
+                const posts = getBlogPosts();
+                const updatedPosts = posts.filter(p => p.id !== postId);
+                saveBlogPosts(updatedPosts);
+                displayBlogPosts();
+                showNotification('Blog post deleted successfully!');
+            }
+        }
+    </script>
+</body>
+</html> 
