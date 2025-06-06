@@ -123,16 +123,28 @@
             return JSON.parse(localStorage.getItem('blogPosts')) || [];
         }
 
+        function getUserRatings() {
+            return JSON.parse(localStorage.getItem('userRatings')) || {};
+        }
+
+        function hasUserRated(productId) {
+            const userRatings = getUserRatings();
+            return userRatings.hasOwnProperty(productId);
+        }
+
         function displayBlogPosts() {
             const posts = getBlogPosts();
             const blogPostsContainer = document.getElementById('blog-posts');
             const categoriesContainer = document.getElementById('blog-categories');
             const recentPostsContainer = document.getElementById('recent-posts');
 
+            // Sort posts by date (newest first)
+            const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+
             // Filter posts by category if one is selected
             const filteredPosts = currentCategory 
-                ? posts.filter(post => post.category === currentCategory)
-                : posts;
+                ? sortedPosts.filter(post => post.category === currentCategory)
+                : sortedPosts;
 
             // Calculate pagination
             const startIndex = (currentPage - 1) * postsPerPage;
@@ -147,28 +159,64 @@
                     </div>
                 `;
             } else {
-                blogPostsContainer.innerHTML = paginatedPosts.map(post => `
-                    <article class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center text-sm text-gray-600 mb-2">
-                                <span>${post.category}</span>
-                                <span class="mx-2">•</span>
-                                <span>${new Date(post.date).toLocaleDateString()}</span>
+                blogPostsContainer.innerHTML = paginatedPosts.map(post => {
+                    const userHasRated = post.productId ? hasUserRated(post.productId) : false;
+                    return `
+                        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <div class="flex items-center text-sm text-gray-600 mb-2">
+                                    <span>${post.category}</span>
+                                    <span class="mx-2">•</span>
+                                    <span>${new Date(post.date).toLocaleDateString()}</span>
+                                </div>
+                                <h2 class="text-xl font-bold mb-2">${post.title}</h2>
+                                <p class="text-gray-600 mb-4">${post.content.substring(0, 150)}...</p>
+                                <div class="flex justify-between items-center">
+                                    <button onclick="viewBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800">
+                                        Read More <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                    ${post.productId ? `
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex items-center">
+                                                <span id="product-rating-${post.productId}" class="mr-2">0.0 ★</span>
+                                                ${!userHasRated ? `
+                                                    <button onclick="showRatingModal(${post.productId})" class="text-blue-600 hover:text-blue-800">
+                                                        <i class="fas fa-star"></i> Rate
+                                                    </button>
+                                                ` : `
+                                                    <span class="ml-2 text-gray-500">(You rated)</span>
+                                                `}
+                                            </div>
+                                            <a href="product.html?id=${post.productId}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                                Shop Now
+                                            </a>
+                                        </div>
+                                    ` : ''}
+                                </div>
                             </div>
-                            <h2 class="text-xl font-bold mb-2">${post.title}</h2>
-                            <p class="text-gray-600 mb-4">${post.content.substring(0, 150)}...</p>
-                            <button onclick="viewBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800">
-                                Read More <i class="fas fa-arrow-right ml-1"></i>
-                            </button>
-                        </div>
-                    </article>
-                `).join('');
+                        </article>
+                    `;
+                }).join('');
+
+                // Update product ratings
+                paginatedPosts.forEach(post => {
+                    if (post.productId) {
+                        const products = JSON.parse(localStorage.getItem('products')) || [];
+                        const product = products.find(p => p.id === post.productId);
+                        if (product) {
+                            const ratingElement = document.getElementById(`product-rating-${post.productId}`);
+                            if (ratingElement) {
+                                ratingElement.textContent = `${product.rating.toFixed(1)} ★`;
+                            }
+                        }
+                    }
+                });
             }
 
             // Display categories with post counts
             const categories = {};
-            posts.forEach(post => {
+            sortedPosts.forEach(post => {
                 categories[post.category] = (categories[post.category] || 0) + 1;
             });
 
@@ -178,7 +226,7 @@
                         All Posts
                     </a>
                     <span class="bg-gray-100 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded">
-                        ${posts.length}
+                        ${sortedPosts.length}
                     </span>
                 </div>
                 ${Object.entries(categories).map(([category, count]) => `
@@ -193,13 +241,11 @@
                 `).join('')}
             `;
 
-            // Display recent posts
-            const recentPosts = [...posts]
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 5);
+            // Display recent posts (newest first)
+            const recentPosts = sortedPosts.slice(0, 5);
 
             recentPostsContainer.innerHTML = recentPosts.map(post => `
-                <div class="flex items-center space-x-4 py-3">
+                <div class="flex items-center space-x-4 py-3 cursor-pointer hover:bg-gray-50 rounded-lg p-2" onclick="viewBlogPost(${post.id})">
                     <img src="${post.image}" alt="${post.title}" class="w-16 h-16 object-cover rounded">
                     <div>
                         <h4 class="text-sm font-semibold mb-1">${post.title}</h4>
@@ -220,9 +266,10 @@
 
         function changePage(direction) {
             const posts = getBlogPosts();
+            const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
             const filteredPosts = currentCategory 
-                ? posts.filter(post => post.category === currentCategory)
-                : posts;
+                ? sortedPosts.filter(post => post.category === currentCategory)
+                : sortedPosts;
             const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
             if (direction === 'prev' && currentPage > 1) {
@@ -237,41 +284,117 @@
         function viewBlogPost(postId) {
             const posts = getBlogPosts();
             const post = posts.find(p => p.id === postId);
-            if (!post) return;
+            
+            if (post) {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-bold">${post.title}</h3>
+                            <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-64 object-cover rounded-lg mb-6">
+                        <div class="flex items-center text-sm text-gray-600 mb-4">
+                            <span>${post.category}</span>
+                            <span class="mx-2">•</span>
+                            <span>${new Date(post.date).toLocaleDateString()}</span>
+                        </div>
+                        <div class="prose max-w-none">
+                            ${post.content}
+                        </div>
+                        ${post.productId ? `
+                            <div class="mt-6 pt-6 border-t">
+                                <h4 class="text-lg font-semibold mb-4">Related Product</h4>
+                                <div class="flex items-center justify-between">
+                                    <a href="product.html?id=${post.productId}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                                        View Product
+                                    </a>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+        }
 
-            // Create modal for full post view
+        // Rating Modal
+        function showRatingModal(productId) {
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
             modal.innerHTML = `
-                <div class="bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="bg-white rounded-lg p-8 max-w-md w-full">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-3xl font-bold">${post.title}</h2>
+                        <h3 class="text-2xl font-bold">Rate Product</h3>
                         <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700" title="Close modal">
                             <i class="fas fa-times text-xl"></i>
                         </button>
                     </div>
-                    <img src="${post.image}" alt="${post.title}" class="w-full h-64 object-cover rounded-lg mb-6">
-                    <div class="flex items-center mb-4">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                            ${post.category}
-                        </span>
-                        <span class="text-gray-500 text-sm ml-4">
-                            ${new Date(post.date).toLocaleDateString()}
-                        </span>
-                        <span class="text-gray-500 text-sm ml-4">
-                            By ${post.author}
-                        </span>
-                    </div>
-                    <div class="prose max-w-none">
-                        ${post.content.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('')}
+                    <div class="space-y-4">
+                        <div class="flex justify-center space-x-2 text-2xl">
+                            ${[1, 2, 3, 4, 5].map(star => `
+                                <button onclick="submitRating(${productId}, ${star})" class="text-gray-300 hover:text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+                        <p class="text-center text-gray-600">Click on a star to rate this product</p>
                     </div>
                 </div>
             `;
             document.body.appendChild(modal);
         }
 
+        // Submit rating
+        function submitRating(productId, rating) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const productIndex = products.findIndex(p => p.id === productId);
+            
+            if (productIndex !== -1) {
+                const product = products[productIndex];
+                const currentRating = product.rating || 0;
+                const ratingCount = product.ratingCount || 0;
+                
+                // Calculate new average rating
+                const newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
+                
+                products[productIndex] = {
+                    ...product,
+                    rating: newRating,
+                    ratingCount: ratingCount + 1
+                };
+                
+                localStorage.setItem('products', JSON.stringify(products));
+                
+                // Save user rating
+                const userRatings = getUserRatings();
+                userRatings[productId] = rating;
+                localStorage.setItem('userRatings', JSON.stringify(userRatings));
+                
+                // Update rating display
+                const ratingElement = document.getElementById(`product-rating-${productId}`);
+                if (ratingElement) {
+                    ratingElement.textContent = `${newRating.toFixed(1)} ★`;
+                }
+                
+                // Close modal
+                document.querySelector('.fixed').remove();
+                
+                // Show success message
+                alert('Thank you for rating this product!');
+                
+                // Refresh display
+                displayBlogPosts();
+            }
+        }
+
         // Initialize the blog page
-        displayBlogPosts();
+        document.addEventListener('DOMContentLoaded', () => {
+            displayBlogPosts();
+        });
     </script>
 </body>
 </html> 

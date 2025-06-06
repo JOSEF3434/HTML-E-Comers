@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100">
-    <!-- Navigation (Same as index.html) -->
+    <!-- Navigation -->
     <nav class="bg-white shadow-lg">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
@@ -47,15 +47,15 @@
                         <h4 class="font-medium mb-2">Categories</h4>
                         <div class="space-y-2">
                             <label class="flex items-center">
-                                <input type="checkbox" class="form-checkbox" value="electronics">
+                                <input type="checkbox" name="category" class="form-checkbox" value="Electronics">
                                 <span class="ml-2">Electronics</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" class="form-checkbox" value="clothing">
-                                <span class="ml-2">Clothing</span>
+                                <input type="checkbox" name="category" class="form-checkbox" value="Lifestyle">
+                                <span class="ml-2">Lifestyle</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" class="form-checkbox" value="books">
+                                <input type="checkbox" name="category" class="form-checkbox" value="Books">
                                 <span class="ml-2">Books</span>
                             </label>
                         </div>
@@ -63,10 +63,10 @@
                     <div>
                         <h4 class="font-medium mb-2">Price Range</h4>
                         <div class="space-y-2">
-                            <input type="range" min="0" max="1000" class="w-full" id="price-range">
+                            <input type="range" min="0" max="1000000" class="w-full" id="price-range">
                             <div class="flex justify-between">
                                 <span>$0</span>
-                                <span>$1000</span>
+                                <span id="price-value">$1,000,000</span>
                             </div>
                         </div>
                     </div>
@@ -91,30 +91,34 @@
             </div>
 
             <!-- Products Section -->
-            <section class="py-12">
-                <div class="max-w-6xl mx-auto px-4">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-3xl font-bold">All Products</h2>
-                        <div class="flex items-center space-x-4">
-                            <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
-                            <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                <option value="default">Default</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="rating">Rating</option>
-                                <option value="name">Name</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <!-- Products will be loaded dynamically -->
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold">All Products</h2>
+                    <div class="flex items-center space-x-4">
+                        <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
+                        <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="default">Default</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="rating">Rating</option>
+                            <option value="name">Name</option>
+                        </select>
                     </div>
                 </div>
-            </section>
+                <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Products will be loaded dynamically -->
+                </div>
+                <!-- Pagination -->
+                <div class="flex justify-center items-center space-x-4 mt-8">
+                    <button onclick="changePage('prev')" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Previous</button>
+                    <span>Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+                    <button onclick="changePage('next')" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Next</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Footer (Same as index.html) -->
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white mt-12">
         <div class="max-w-6xl mx-auto px-4 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -154,38 +158,290 @@
 
     <script src="js/main.js"></script>
     <script>
-        // Sort products function
-        function sortProducts(products, sortBy) {
-            switch(sortBy) {
-                case 'price-low':
+        // Shop Functions
+        let currentPage = 1;
+        const productsPerPage = 8;
+        let selectedCategories = [];
+        let selectedRating = 0;
+        let selectedPriceRange = { min: 0, max: 1000000 };
+        let currentSort = 'default';
+
+        function getProducts() {
+            return JSON.parse(localStorage.getItem('products')) || [];
+        }
+
+        function getUserRatings() {
+            return JSON.parse(localStorage.getItem('userRatings')) || {};
+        }
+
+        function hasUserRated(productId) {
+            const userRatings = getUserRatings();
+            return userRatings.hasOwnProperty(productId);
+        }
+
+        function saveUserRating(productId, rating) {
+            const userRatings = getUserRatings();
+            userRatings[productId] = rating;
+            localStorage.setItem('userRatings', JSON.stringify(userRatings));
+        }
+
+        function applyFilters() {
+            const products = getProducts();
+            let filteredProducts = [...products];
+
+            // Apply category filter
+            if (selectedCategories.length > 0) {
+                filteredProducts = filteredProducts.filter(product => 
+                    selectedCategories.includes(product.category)
+                );
+            }
+
+            // Apply rating filter
+            if (selectedRating > 0) {
+                filteredProducts = filteredProducts.filter(product => 
+                    (product.rating || 0) >= selectedRating
+                );
+            }
+
+            // Apply price range filter
+            filteredProducts = filteredProducts.filter(product => 
+                product.price >= selectedPriceRange.min && 
+                product.price <= selectedPriceRange.max
+            );
+
+            // Apply sorting
+            filteredProducts = sortProducts(filteredProducts);
+            return filteredProducts;
+        }
+
+        function sortProducts(products) {
+            switch (currentSort) {
+                case 'price-asc':
                     return [...products].sort((a, b) => a.price - b.price);
-                case 'price-high':
+                case 'price-desc':
                     return [...products].sort((a, b) => b.price - a.price);
                 case 'rating':
-                    return [...products].sort((a, b) => b.rating - a.rating);
+                    return [...products].sort((a, b) => (b.rating || 0) - (a.rating || 0));
                 case 'name':
-                    return [...products].sort((a, b) => a.title.localeCompare(b.title));
+                    return [...products].sort((a, b) => (a.title || '').localeCompare(b.title || ''));
                 default:
                     return products;
             }
         }
 
-        // Display sorted products
-        function displaySortedProducts() {
-            const sortSelect = document.getElementById('sort-select');
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            const sortedProducts = sortProducts(products, sortSelect.value);
-            displayProducts('products-grid', sortedProducts);
+        function displayFilteredProducts() {
+            const filteredProducts = applyFilters();
+            const productsContainer = document.getElementById('products-grid');
+
+            if (!productsContainer) {
+                console.error('Products container not found!');
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+            if (paginatedProducts.length === 0) {
+                productsContainer.innerHTML = `
+                    <div class="col-span-3 text-center py-8">
+                        <p class="text-gray-500">No products found matching your criteria.</p>
+                    </div>
+                `;
+            } else {
+                productsContainer.innerHTML = paginatedProducts.map(product => {
+                    const userHasRated = hasUserRated(product.id);
+                    const productImage = product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/300x200?text=No+Image';
+                    return `
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="${productImage}" alt="${product.title}" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">${product.title}</h3>
+                                <p class="text-gray-600 mb-4">${product.description || ''}</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-2xl font-bold text-blue-600">$${product.price.toFixed(2)}</span>
+                                    <div class="flex items-center">
+                                        <span class="mr-2">${(product.rating || 0).toFixed(1)} ★</span>
+                                        ${!userHasRated ? `
+                                            <button onclick="showRatingModal(${product.id})" class="text-blue-600 hover:text-blue-800">
+                                                <i class="fas fa-star"></i> Rate
+                                            </button>
+                                        ` : `
+                                            <span class="text-gray-500">(You rated)</span>
+                                        `}
+                                    </div>
+                                </div>
+                                <div class="flex justify-between">
+                                    <button onclick="addToCart(${product.id})" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                        Add to Cart
+                                    </button>
+                                    <a href="product.html?id=${product.id}" class="text-blue-600 hover:text-blue-800">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Update pagination
+            const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+            const currentPageElement = document.getElementById('current-page');
+            const totalPagesElement = document.getElementById('total-pages');
+            
+            if (currentPageElement) currentPageElement.textContent = currentPage;
+            if (totalPagesElement) totalPagesElement.textContent = totalPages;
         }
 
-        // Initialize shop page
+        // Initialize the shop page
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial display
-            displaySortedProducts();
-
-            // Add sort change listener
-            document.getElementById('sort-select').addEventListener('change', displaySortedProducts);
+            displayFilteredProducts();
         });
+
+        // Event Listeners
+        document.querySelectorAll('input[name="category"]').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    selectedCategories.push(e.target.value);
+                } else {
+                    selectedCategories = selectedCategories.filter(cat => cat !== e.target.value);
+                }
+                currentPage = 1;
+                displayFilteredProducts();
+            });
+        });
+
+        document.querySelectorAll('input[name="rating"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                selectedRating = parseInt(e.target.value);
+                currentPage = 1;
+                displayFilteredProducts();
+            });
+        });
+
+        document.getElementById('price-range').addEventListener('input', (e) => {
+            selectedPriceRange.max = parseInt(e.target.value);
+            const priceValue = document.getElementById('price-value');
+            if (priceValue) priceValue.textContent = `$${parseInt(e.target.value).toLocaleString()}`;
+            currentPage = 1;
+            displayFilteredProducts();
+        });
+
+        document.getElementById('sort-select').addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            displayFilteredProducts();
+        });
+
+        function changePage(direction) {
+            const filteredProducts = applyFilters();
+            const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+            if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            } else if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            }
+
+            displayFilteredProducts();
+        }
+
+        // Rating Modal
+        function showRatingModal(productId) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold">Rate Product</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-center space-x-2 text-2xl">
+                            ${[1, 2, 3, 4, 5].map(star => `
+                                <button onclick="submitRating(${productId}, ${star})" class="text-gray-300 hover:text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+                        <p class="text-center text-gray-600">Click on a star to rate this product</p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Submit rating
+        function submitRating(productId, rating) {
+            const products = getProducts();
+            const productIndex = products.findIndex(p => p.id === productId);
+            
+            if (productIndex !== -1) {
+                const product = products[productIndex];
+                const currentRating = product.rating || 0;
+                const ratingCount = product.ratingCount || 0;
+                
+                // Calculate new average rating
+                const newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
+                
+                products[productIndex] = {
+                    ...product,
+                    rating: newRating,
+                    ratingCount: ratingCount + 1
+                };
+                
+                localStorage.setItem('products', JSON.stringify(products));
+                saveUserRating(productId, rating);
+                
+                // Close modal
+                document.querySelector('.fixed').remove();
+                
+                // Show success message
+                alert('Thank you for rating this product!');
+                
+                // Refresh display
+                displayFilteredProducts();
+            }
+        }
+
+        // Add to cart function
+        function addToCart(productId) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const products = getProducts();
+            const product = products.find(p => p.id === productId);
+            
+            if (product) {
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.title,
+                        price: product.price,
+                        image: product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/300x200?text=No+Image',
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                alert('Product added to cart!');
+            }
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCount = document.getElementById('cart-count');
+            if (cartCount) cartCount.textContent = count;
+        }
+
+        // Initialize cart count
+        updateCartCount();
     </script>
 </body>
 </html> 

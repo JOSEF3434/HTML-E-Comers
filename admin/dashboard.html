@@ -263,6 +263,26 @@
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter image URL">
                 </div>
+                <div>
+                    <label for="product-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="product-category" name="category" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Select a category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Books">Books</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Health">Health</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="product-blog-content" class="block text-sm font-medium text-gray-700">Blog Content</label>
+                    <textarea id="product-blog-content" name="blogContent" rows="4"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Enter blog content about this product (optional)"></textarea>
+                </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" onclick="hideAddProductModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Product</button>
@@ -542,13 +562,35 @@
                 title: document.getElementById('product-title').value,
                 price: parseFloat(document.getElementById('product-price').value),
                 description: document.getElementById('product-description').value,
-                images: [document.getElementById('product-image').value]
+                images: [document.getElementById('product-image').value],
+                category: document.getElementById('product-category').value,
+                rating: 0,
+                reviews: []
             };
 
-            addNewProduct(newProduct);
+            const productId = addNewProduct(newProduct);
+
+            // If blog content is provided, create a blog post
+            const blogContent = document.getElementById('product-blog-content').value;
+            if (blogContent) {
+                const posts = getBlogPosts();
+                const newPost = {
+                    id: Math.max(...posts.map(p => p.id), 0) + 1,
+                    title: newProduct.title,
+                    category: newProduct.category,
+                    content: blogContent,
+                    image: newProduct.images[0],
+                    date: new Date().toISOString(),
+                    author: localStorage.getItem('userName') || 'Admin',
+                    productId: productId // Link to the product
+                };
+                posts.push(newPost);
+                saveBlogPosts(posts);
+            }
+
             displayAdminProducts();
             hideAddProductModal();
-            showNotification('Product added successfully!');
+            showNotification('Product and blog post added successfully!');
         });
 
         // Edit Product Modal Functions
