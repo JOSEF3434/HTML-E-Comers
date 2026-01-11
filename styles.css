@@ -23,6 +23,19 @@
     background: #555;
 }
 
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+    background: #1f2937; /* gray-800 */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4b5563; /* gray-600 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280; /* gray-500 */
+}
+
 /* Product image hover effect */
 .product-image {
     transition: transform 0.3s ease;
@@ -43,6 +56,10 @@
     margin-right: 8px;
     position: relative;
     cursor: pointer;
+}
+
+.dark .form-checkbox {
+    border-color: #4b5563; /* gray-600 */
 }
 
 .form-checkbox:checked {
@@ -68,6 +85,10 @@ input[type="range"] {
     background: #e2e8f0;
     border-radius: 2px;
     outline: none;
+}
+
+.dark input[type="range"] {
+    background: #4b5563; /* gray-600 */
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -125,6 +146,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
     align-items: center;
 }
 
+.dark .loading::after {
+    background: rgba(0, 0, 0, 0.8);
+}
+
 .loading::before {
     content: '';
     position: absolute;
@@ -140,7 +165,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
     z-index: 1;
 }
 
+.dark .loading::before {
+    border: 3px solid #374151; /* gray-700 */
+    border-top: 3px solid #3b82f6;
+}
+
 @keyframes spin {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
-} 
+}

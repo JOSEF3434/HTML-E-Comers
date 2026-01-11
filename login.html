@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - E-Commerce Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 dark:bg-dark-bg transition-colors duration-200">
     <!-- Navigation (Same as other pages) -->
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white dark:bg-dark-card shadow-lg transition-colors duration-200">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-gray-800">ShopNow</a>
+                    <a href="index.html" class="text-2xl font-bold text-gray-800 dark:text-white">ShopNow</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-800 hover:text-blue-600">Home</a>
-                    <a href="shop.html" class="text-gray-800 hover:text-blue-600">Shop</a>
-                    <a href="blog.html" class="text-gray-800 hover:text-blue-600">Blog</a>
-                    <a href="about.html" class="text-gray-800 hover:text-blue-600">About</a>
-                    <a href="contact.html" class="text-gray-800 hover:text-blue-600">Contact</a>
+                    <a href="index.html" class="text-gray-800 dark:text-white hover:text-blue-600">Home</a>
+                    <a href="shop.html" class="text-gray-800 dark:text-white hover:text-blue-600">Shop</a>
+                    <a href="blog.html" class="text-gray-800 dark:text-white hover:text-blue-600">Blog</a>
+                    <a href="about.html" class="text-gray-800 dark:text-white hover:text-blue-600">About</a>
+                    <a href="contact.html" class="text-gray-800 dark:text-white hover:text-blue-600">Contact</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="#" class="text-gray-800 hover:text-blue-600">
+                    <button id="theme-toggle"
+                        class="text-gray-800 dark:text-white hover:text-blue-600 transition-colors">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
+                    <a href="#" class="text-gray-800 dark:text-white hover:text-blue-600">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cart-count" class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs">0</span>
                     </a>
@@ -37,7 +44,7 @@
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
                     Sign in to your account
                 </h2>
             </div>
@@ -46,13 +53,13 @@
                     <div>
                         <label for="email" class="sr-only">Email address</label>
                         <input id="email" name="email" type="email" required
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-dark-card rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200"
                             placeholder="Email address">
                     </div>
                     <div>
                         <label for="password" class="sr-only">Password</label>
                         <input id="password" name="password" type="password" required
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-dark-card rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200"
                             placeholder="Password">
                     </div>
                 </div>
@@ -68,10 +75,11 @@
     </div>
 
     <script src="js/main.js"></script>
+    <script src="js/theme-toggle.js"></script>
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        document.getElementById('login-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -81,7 +89,7 @@
                 // Store login state
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userRole', 'admin');
-                
+
                 // Redirect to dashboard
                 window.location.href = 'admin/dashboard.html';
             } else {
@@ -90,4 +98,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>

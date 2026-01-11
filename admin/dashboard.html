@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - E-Commerce Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/tailwind-config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-gray-100 transition-colors duration-200">
     <!-- Admin Navigation -->
-    <nav class="bg-gray-800 text-white">
+    <nav class="bg-gray-800 dark:bg-black text-white transition-colors duration-200">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <a href="../index.html" class="text-2xl font-bold">ShopNow Admin</a>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="text-gray-300 hover:text-white transition-colors mr-4">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
                     <span id="admin-email" class="text-gray-300"></span>
-                    <button id="logout-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+                    <button id="logout-btn"
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
                 </div>
             </div>
         </div>
@@ -29,31 +36,41 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Sidebar -->
             <div class="md:col-span-1">
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-xl font-bold mb-4">Admin Menu</h2>
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
+                    <h2 class="text-xl font-bold mb-4 dark:text-white">Admin Menu</h2>
                     <ul class="space-y-2">
                         <li>
-                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 text-blue-600" onclick="showSection('products')">
+                            <button
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 text-blue-600 dark:text-blue-400 transition-colors"
+                                onclick="showSection('products')">
                                 <i class="fas fa-box mr-2"></i>Products
                             </button>
                         </li>
                         <li>
-                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('orders')">
+                            <button
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors"
+                                onclick="showSection('orders')">
                                 <i class="fas fa-shopping-cart mr-2"></i>Orders
                             </button>
                         </li>
                         <li>
-                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('customers')">
+                            <button
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors"
+                                onclick="showSection('customers')">
                                 <i class="fas fa-users mr-2"></i>Customers
                             </button>
                         </li>
                         <li>
-                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('blog')">
+                            <button
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors"
+                                onclick="showSection('blog')">
                                 <i class="fas fa-blog mr-2"></i>Blog Posts
                             </button>
                         </li>
                         <li>
-                            <button class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50" onclick="showSection('analytics')">
+                            <button
+                                class="w-full text-left px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors"
+                                onclick="showSection('analytics')">
                                 <i class="fas fa-chart-bar mr-2"></i>Analytics
                             </button>
                         </li>
@@ -64,21 +81,31 @@
             <!-- Main Content -->
             <div class="md:col-span-3">
                 <!-- Products Section -->
-                <div id="products-section" class="bg-white rounded-lg shadow-lg p-6">
+                <div id="products-section"
+                    class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold">Products</h2>
-                        <button onclick="showAddProductModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <h2 class="text-2xl font-bold dark:text-white">Products</h2>
+                        <button onclick="showAddProductModal()"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                             <i class="fas fa-plus mr-2"></i>Add Product
                         </button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full">
                             <thead>
-                                <tr class="bg-gray-50">
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <tr class="bg-gray-50 dark:bg-gray-800">
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Product</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Price</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Stock</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="products-table-body">
@@ -89,10 +116,13 @@
                 </div>
 
                 <!-- Orders Section -->
-                <div id="orders-section" class="hidden bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-2xl font-bold mb-6">Orders</h2>
+                <div id="orders-section"
+                    class="hidden bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
+                    <h2 class="text-2xl font-bold mb-6 dark:text-white">Orders</h2>
                     <div class="mb-4">
-                        <select id="order-status-filter" class="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" aria-label="Filter orders by status">
+                        <select id="order-status-filter"
+                            class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            aria-label="Filter orders by status">
                             <option value="all">All Status</option>
                             <option value="pending">Pending</option>
                             <option value="paid">Paid</option>
@@ -102,14 +132,28 @@
                     <div class="overflow-x-auto">
                         <table class="min-w-full">
                             <thead>
-                                <tr class="bg-gray-50">
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Status</th>
-                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <tr class="bg-gray-50 dark:bg-gray-800">
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Date</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Order ID</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Customer</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Items</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Total</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Payment Status</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="orders-table-body">
@@ -120,18 +164,31 @@
                 </div>
 
                 <!-- Customers Section -->
-                <div id="customers-section" class="hidden bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-2xl font-bold mb-6">Customers</h2>
+                <div id="customers-section"
+                    class="hidden bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
+                    <h2 class="text-2xl font-bold mb-6 dark:text-white">Customers</h2>
                     <div class="overflow-x-auto">
                         <table class="min-w-full">
                             <thead>
-                                <tr class="bg-gray-50">
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spent</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Order</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <tr class="bg-gray-50 dark:bg-gray-800">
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Name</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Email</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Orders</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Total Spent</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Last Order</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="customers-table-body">
@@ -142,22 +199,34 @@
                 </div>
 
                 <!-- Blog Posts Section -->
-                <div id="blog-section" class="hidden bg-white rounded-lg shadow-lg p-6">
+                <div id="blog-section"
+                    class="hidden bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold">Blog Posts</h2>
-                        <button onclick="showAddBlogPostModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <h2 class="text-2xl font-bold dark:text-white">Blog Posts</h2>
+                        <button onclick="showAddBlogPostModal()"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                             <i class="fas fa-plus mr-2"></i>Add Post
                         </button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full">
                             <thead>
-                                <tr class="bg-gray-50">
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <tr class="bg-gray-50 dark:bg-gray-800">
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Title</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Category</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Date</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="blog-posts-table-body">
@@ -168,12 +237,15 @@
                 </div>
 
                 <!-- Analytics Section -->
-                <div id="analytics-section" class="hidden bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-2xl font-bold mb-6">Analytics</h2>
-                    
+                <div id="analytics-section"
+                    class="hidden bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
+                    <h2 class="text-2xl font-bold mb-6 dark:text-white">Analytics</h2>
+
                     <!-- Time Period Selector -->
                     <div class="mb-6">
-                        <select id="analytics-period" class="rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" aria-label="Select analytics time period">
+                        <select id="analytics-period"
+                            class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            aria-label="Select analytics time period">
                             <option value="daily">Daily</option>
                             <option value="weekly">Weekly</option>
                             <option value="monthly">Monthly</option>
@@ -182,41 +254,50 @@
 
                     <!-- Summary Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-blue-50 p-6 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">Total Sales</h3>
-                            <p id="total-sales" class="text-3xl font-bold text-blue-600">$0</p>
+                        <div class="bg-blue-50 dark:bg-blue-900/30 p-6 rounded-lg transition-colors duration-200">
+                            <h3 class="text-lg font-semibold mb-2 dark:text-blue-100">Total Sales</h3>
+                            <p id="total-sales" class="text-3xl font-bold text-blue-600 dark:text-blue-400">$0</p>
                         </div>
-                        <div class="bg-green-50 p-6 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">Total Orders</h3>
-                            <p id="total-orders" class="text-3xl font-bold text-green-600">0</p>
+                        <div class="bg-green-50 dark:bg-green-900/30 p-6 rounded-lg transition-colors duration-200">
+                            <h3 class="text-lg font-semibold mb-2 dark:text-green-100">Total Orders</h3>
+                            <p id="total-orders" class="text-3xl font-bold text-green-600 dark:text-green-400">0</p>
                         </div>
-                        <div class="bg-purple-50 p-6 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">Total Customers</h3>
-                            <p id="total-customers" class="text-3xl font-bold text-purple-600">0</p>
+                        <div class="bg-purple-50 dark:bg-purple-900/30 p-6 rounded-lg transition-colors duration-200">
+                            <h3 class="text-lg font-semibold mb-2 dark:text-purple-100">Total Customers</h3>
+                            <p id="total-customers" class="text-3xl font-bold text-purple-600 dark:text-purple-400">0
+                            </p>
                         </div>
                     </div>
 
                     <!-- Charts -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-white p-6 rounded-lg shadow">
-                            <h3 class="text-lg font-semibold mb-4">Sales Trend</h3>
+                        <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow transition-colors duration-200">
+                            <h3 class="text-lg font-semibold mb-4 dark:text-white">Sales Trend</h3>
                             <canvas id="sales-chart"></canvas>
                         </div>
-                        <div class="bg-white p-6 rounded-lg shadow">
-                            <h3 class="text-lg font-semibold mb-4">Order Distribution</h3>
+                        <div class="bg-white dark:bg-dark-card p-6 rounded-lg shadow transition-colors duration-200">
+                            <h3 class="text-lg font-semibold mb-4 dark:text-white">Order Distribution</h3>
                             <canvas id="orders-chart"></canvas>
                         </div>
                     </div>
 
                     <!-- Detailed Table -->
-                    <div class="bg-white rounded-lg shadow">
+                    <div class="bg-white dark:bg-dark-card rounded-lg shadow transition-colors duration-200">
                         <table class="min-w-full">
                             <thead>
-                                <tr class="bg-gray-50">
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sales</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customers</th>
+                                <tr class="bg-gray-50 dark:bg-gray-800">
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Period</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Sales</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Orders</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        Customers</th>
                                 </tr>
                             </thead>
                             <tbody id="analytics-table-body">
@@ -231,42 +312,49 @@
 
     <!-- Add Product Modal -->
     <div id="add-product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+        <div class="bg-white dark:bg-dark-card rounded-lg p-8 max-w-md w-full transition-colors duration-200">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold">Add New Product</h3>
-                <button onclick="hideAddProductModal()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                <h3 class="text-2xl font-bold dark:text-white">Add New Product</h3>
+                <button onclick="hideAddProductModal()"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    title="Close modal">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <form id="add-product-form" class="space-y-4">
                 <div>
-                    <label for="product-title" class="block text-sm font-medium text-gray-700">Product Title</label>
+                    <label for="product-title"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Product Title</label>
                     <input type="text" id="product-title" name="title" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter product title">
                 </div>
                 <div>
-                    <label for="product-price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <label for="product-price"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
                     <input type="number" id="product-price" name="price" step="0.01" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter product price">
                 </div>
                 <div>
-                    <label for="product-description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <label for="product-description"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                     <textarea id="product-description" name="description" rows="3" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter product description"></textarea>
                 </div>
                 <div>
-                    <label for="product-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <label for="product-image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Image
+                        URL</label>
                     <input type="url" id="product-image" name="image" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter image URL">
                 </div>
                 <div>
-                    <label for="product-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <label for="product-category"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
                     <select id="product-category" name="category" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option value="">Select a category</option>
                         <option value="Electronics">Electronics</option>
                         <option value="Clothing">Clothing</option>
@@ -278,14 +366,18 @@
                     </select>
                 </div>
                 <div>
-                    <label for="product-blog-content" class="block text-sm font-medium text-gray-700">Blog Content</label>
+                    <label for="product-blog-content"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Blog
+                        Content</label>
                     <textarea id="product-blog-content" name="blogContent" rows="4"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter blog content about this product (optional)"></textarea>
                 </div>
                 <div class="flex justify-end space-x-4">
-                    <button type="button" onclick="hideAddProductModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Product</button>
+                    <button type="button" onclick="hideAddProductModal()"
+                        class="px-4 py-2 border dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add
+                        Product</button>
                 </div>
             </form>
         </div>
@@ -293,42 +385,51 @@
 
     <!-- Edit Product Modal -->
     <div id="edit-product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+        <div class="bg-white dark:bg-dark-card rounded-lg p-8 max-w-md w-full transition-colors duration-200">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold">Edit Product</h3>
-                <button onclick="hideEditProductModal()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                <h3 class="text-2xl font-bold dark:text-white">Edit Product</h3>
+                <button onclick="hideEditProductModal()"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    title="Close modal">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <form id="edit-product-form" class="space-y-4">
                 <input type="hidden" id="edit-product-id">
                 <div>
-                    <label for="edit-product-title" class="block text-sm font-medium text-gray-700">Product Title</label>
+                    <label for="edit-product-title"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Product
+                        Title</label>
                     <input type="text" id="edit-product-title" name="title" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter product title">
                 </div>
                 <div>
-                    <label for="edit-product-price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <label for="edit-product-price"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
                     <input type="number" id="edit-product-price" name="price" step="0.01" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter product price">
                 </div>
                 <div>
-                    <label for="edit-product-description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <label for="edit-product-description"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                     <textarea id="edit-product-description" name="description" rows="3" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter product description"></textarea>
                 </div>
                 <div>
-                    <label for="edit-product-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <label for="edit-product-image"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Image URL</label>
                     <input type="url" id="edit-product-image" name="image" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter image URL">
                 </div>
                 <div class="flex justify-end space-x-4">
-                    <button type="button" onclick="hideEditProductModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update Product</button>
+                    <button type="button" onclick="hideEditProductModal()"
+                        class="px-4 py-2 border dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update
+                        Product</button>
                 </div>
             </form>
         </div>
@@ -336,24 +437,27 @@
 
     <!-- Add Blog Post Modal -->
     <div id="add-blog-post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+        <div class="bg-white dark:bg-dark-card rounded-lg p-8 max-w-2xl w-full transition-colors duration-200">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold">Add New Blog Post</h3>
-                <button onclick="hideAddBlogPostModal()" class="text-gray-500 hover:text-gray-700">
+                <h3 class="text-2xl font-bold dark:text-white">Add New Blog Post</h3>
+                <button onclick="hideAddBlogPostModal()"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <form id="add-blog-post-form" class="space-y-4">
                 <div>
-                    <label for="post-title" class="block text-sm font-medium text-gray-700">Title</label>
+                    <label for="post-title"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
                     <input type="text" id="post-title" name="title" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter post title">
                 </div>
                 <div>
-                    <label for="post-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <label for="post-category"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
                     <select id="post-category" name="category" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option value="">Select a category</option>
                         <option value="Technology">Technology</option>
                         <option value="Fashion">Fashion</option>
@@ -362,20 +466,24 @@
                     </select>
                 </div>
                 <div>
-                    <label for="post-content" class="block text-sm font-medium text-gray-700">Content</label>
+                    <label for="post-content"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content</label>
                     <textarea id="post-content" name="content" rows="6" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Write your blog post content"></textarea>
                 </div>
                 <div>
-                    <label for="post-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <label for="post-image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Image
+                        URL</label>
                     <input type="url" id="post-image" name="image" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter image URL">
                 </div>
                 <div class="flex justify-end space-x-4">
-                    <button type="button" onclick="hideAddBlogPostModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Publish Post</button>
+                    <button type="button" onclick="hideAddBlogPostModal()"
+                        class="px-4 py-2 border dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Publish
+                        Post</button>
                 </div>
             </form>
         </div>
@@ -383,25 +491,29 @@
 
     <!-- Edit Blog Post Modal -->
     <div id="edit-blog-post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+        <div class="bg-white dark:bg-dark-card rounded-lg p-8 max-w-2xl w-full transition-colors duration-200">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold">Edit Blog Post</h3>
-                <button onclick="hideEditBlogPostModal()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                <h3 class="text-2xl font-bold dark:text-white">Edit Blog Post</h3>
+                <button onclick="hideEditBlogPostModal()"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                    title="Close modal">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <form id="edit-blog-post-form" class="space-y-4">
                 <input type="hidden" id="edit-post-id">
                 <div>
-                    <label for="edit-post-title" class="block text-sm font-medium text-gray-700">Title</label>
+                    <label for="edit-post-title"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
                     <input type="text" id="edit-post-title" name="title" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter post title">
                 </div>
                 <div>
-                    <label for="edit-post-category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <label for="edit-post-category"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
                     <select id="edit-post-category" name="category" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         <option value="">Select a category</option>
                         <option value="Technology">Technology</option>
                         <option value="Fashion">Fashion</option>
@@ -410,33 +522,38 @@
                     </select>
                 </div>
                 <div>
-                    <label for="edit-post-content" class="block text-sm font-medium text-gray-700">Content</label>
+                    <label for="edit-post-content"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content</label>
                     <textarea id="edit-post-content" name="content" rows="6" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Write your blog post content"></textarea>
                 </div>
                 <div>
-                    <label for="edit-post-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                    <label for="edit-post-image"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Image URL</label>
                     <input type="url" id="edit-post-image" name="image" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-dark-bg dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         placeholder="Enter image URL">
                 </div>
                 <div class="flex justify-end space-x-4">
-                    <button type="button" onclick="hideEditBlogPostModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update Post</button>
+                    <button type="button" onclick="hideEditBlogPostModal()"
+                        class="px-4 py-2 border dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update
+                        Post</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script src="../js/main.js"></script>
+    <script src="../js/theme-toggle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Check if user is logged in and is admin
         function checkAuth() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userRole = localStorage.getItem('userRole');
-            
+
             if (!isLoggedIn || userRole !== 'admin') {
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('userRole');
@@ -451,7 +568,7 @@
         document.getElementById('admin-email').textContent = 'admin@shopnow.com';
 
         // Logout functionality
-        document.getElementById('logout-btn').addEventListener('click', function() {
+        document.getElementById('logout-btn').addEventListener('click', function () {
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('userRole');
             window.location.href = '/index.html';
@@ -528,25 +645,25 @@
             if (!productsTableBody) return;
 
             const products = getProducts();
-            
+
             productsTableBody.innerHTML = products.map(product => `
-                <tr>
+                <tr class="border-b dark:border-gray-700 transition-colors duration-200">
                     <td class="px-6 py-4">
                         <div class="flex items-center">
                             <img src="${product.images[0]}" alt="${product.title}" class="w-16 h-16 object-cover rounded">
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">${product.title}</div>
-                                <div class="text-sm text-gray-500">${product.description.substring(0, 50)}...</div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">${product.title}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">${product.description.substring(0, 50)}...</div>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-900">$${product.price.toFixed(2)}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${product.rating.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">$${product.price ? product.price.toFixed(2) : '0.00'}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${product.rating ? product.rating.toFixed(1) : '0.0'}</td>
                     <td class="px-6 py-4 text-sm font-medium">
-                        <button onclick="editProduct(${product.id})" class="text-blue-600 hover:text-blue-800 mr-2">
+                        <button onclick="editProduct(${product.id})" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mr-2">
                             <i class="fas fa-edit"></i> Edit
                         </button>
-                        <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-800">
+                        <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
                             <i class="fas fa-trash"></i> Delete
                         </button>
                     </td>
@@ -555,9 +672,9 @@
         }
 
         // Add new product
-        document.getElementById('add-product-form').addEventListener('submit', function(e) {
+        document.getElementById('add-product-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const newProduct = {
                 title: document.getElementById('product-title').value,
                 price: parseFloat(document.getElementById('product-price').value),
@@ -621,9 +738,9 @@
         }
 
         // Update product
-        document.getElementById('edit-product-form').addEventListener('submit', function(e) {
+        document.getElementById('edit-product-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const productId = parseInt(document.getElementById('edit-product-id').value);
             const updatedProduct = {
                 title: document.getElementById('edit-product-title').value,
@@ -672,20 +789,20 @@
         function displayOrders() {
             const orders = getOrders();
             const statusFilter = document.getElementById('order-status-filter').value;
-            
+
             // Sort orders by date (newest first)
             orders.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
+
             // Filter orders by status if needed
-            const filteredOrders = statusFilter === 'all' 
-                ? orders 
+            const filteredOrders = statusFilter === 'all'
+                ? orders
                 : orders.filter(order => order.status === statusFilter);
 
             const ordersTableBody = document.getElementById('orders-table-body');
             if (filteredOrders.length === 0) {
                 ordersTableBody.innerHTML = `
                     <tr>
-                        <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="8" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                             No orders found
                         </td>
                     </tr>
@@ -694,22 +811,22 @@
             }
 
             ordersTableBody.innerHTML = filteredOrders.map(order => `
-                <tr>
-                    <td class="px-6 py-4 text-sm text-gray-900">${new Date(order.date).toLocaleDateString()}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">#${order.id}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${order.customerName}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${order.items.length} items</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">$${order.total.toFixed(2)}</td>
+                <tr class="border-b dark:border-gray-700 transition-colors duration-200">
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${new Date(order.date).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">#${order.id}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${order.customerName}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${order.items.length} items</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">$${order.total.toFixed(2)}</td>
                     <td class="px-6 py-4 text-sm">
                         <span class="px-2 py-1 rounded-full text-xs font-semibold
-                            ${order.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' : 
-                              order.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
-                              'bg-red-100 text-red-800'}">
+                            ${order.paymentStatus === 'paid' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' :
+                    order.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100' :
+                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}">
                             ${order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}
                         </span>
                     </td>
                     <td class="px-6 py-4 text-sm font-medium">
-                        <button onclick="viewOrderDetails(${order.id})" class="text-blue-600 hover:text-blue-800">
+                        <button onclick="viewOrderDetails(${order.id})" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                             <i class="fas fa-eye"></i> View
                         </button>
                     </td>
@@ -741,7 +858,7 @@
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
 
-            const itemsList = order.items.map(item => 
+            const itemsList = order.items.map(item =>
                 `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
             ).join('\n');
 
@@ -768,7 +885,7 @@ Total: $${order.total.toFixed(2)}
         function updateAnalytics() {
             const period = document.getElementById('analytics-period').value;
             const orders = getOrders();
-            
+
             // Calculate totals
             const totalSales = orders.filter(order => order.paymentStatus === 'paid')
                 .reduce((sum, order) => sum + (order.total || 0), 0);
@@ -784,23 +901,23 @@ Total: $${order.total.toFixed(2)}
 
             // Group data by period
             const groupedData = groupDataByPeriod(orders, period);
-            
+
             // Update charts
             updateSalesChart(groupedData);
             updateOrdersChart(groupedData);
-            
+
             // Update detailed table
             updateAnalyticsTable(groupedData);
         }
 
         function groupDataByPeriod(orders, period) {
             const grouped = {};
-            
+
             orders.forEach(order => {
                 const date = new Date(order.date);
                 let key;
-                
-                switch(period) {
+
+                switch (period) {
                     case 'daily':
                         key = date.toLocaleDateString();
                         break;
@@ -813,7 +930,7 @@ Total: $${order.total.toFixed(2)}
                         key = `${date.getMonth() + 1}/${date.getFullYear()}`;
                         break;
                 }
-                
+
                 if (!grouped[key]) {
                     grouped[key] = {
                         sales: 0,
@@ -823,7 +940,7 @@ Total: $${order.total.toFixed(2)}
                         customers: new Set()
                     };
                 }
-                
+
                 if (order.paymentStatus === 'paid') {
                     grouped[key].sales += order.total || 0;
                     grouped[key].paidOrders += 1;
@@ -834,7 +951,7 @@ Total: $${order.total.toFixed(2)}
                 grouped[key].orders += 1;
                 grouped[key].customers.add(order.customerId);
             });
-            
+
             return grouped;
         }
 
@@ -842,12 +959,17 @@ Total: $${order.total.toFixed(2)}
             const ctx = document.getElementById('sales-chart').getContext('2d');
             const labels = Object.keys(data);
             const sales = labels.map(key => data[key].sales);
-            
+
+            // Check for dark mode
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#9ca3af' : '#6b7280';
+            const gridColor = isDark ? '#374151' : '#e5e7eb';
+
             // Destroy existing chart if it exists
             if (window.salesChart) {
                 window.salesChart.destroy();
             }
-            
+
             window.salesChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -863,7 +985,28 @@ Total: $${order.total.toFixed(2)}
                     responsive: true,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
                         }
                     }
                 }
@@ -874,12 +1017,17 @@ Total: $${order.total.toFixed(2)}
             const ctx = document.getElementById('orders-chart').getContext('2d');
             const labels = Object.keys(data);
             const orders = labels.map(key => data[key].orders);
-            
+
+            // Check for dark mode
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#9ca3af' : '#6b7280';
+            const gridColor = isDark ? '#374151' : '#e5e7eb';
+
             // Destroy existing chart if it exists
             if (window.ordersChart) {
                 window.ordersChart.destroy();
             }
-            
+
             window.ordersChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -894,7 +1042,28 @@ Total: $${order.total.toFixed(2)}
                     responsive: true,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: textColor
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
                         }
                     }
                 }
@@ -915,11 +1084,11 @@ Total: $${order.total.toFixed(2)}
             }
 
             tableBody.innerHTML = Object.entries(data).map(([period, stats]) => `
-                <tr>
-                    <td class="px-6 py-4 text-sm text-gray-900">${period}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">$${stats.sales.toFixed(2)}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${stats.orders}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${stats.customers.size}</td>
+                <tr class="border-b dark:border-gray-700 transition-colors duration-200">
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${period}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">$${stats.sales.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${stats.orders}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${stats.customers.size}</td>
                 </tr>
             `).join('');
         }
@@ -928,13 +1097,18 @@ Total: $${order.total.toFixed(2)}
         document.getElementById('order-status-filter').addEventListener('change', displayOrders);
         document.getElementById('analytics-period').addEventListener('change', updateAnalytics);
 
+        // Listen for theme changes to update charts
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            setTimeout(updateAnalytics, 50);
+        });
+
         // Initialize sections
         function showSection(sectionId) {
             document.querySelectorAll('[id$="-section"]').forEach(section => {
                 section.classList.add('hidden');
             });
             document.getElementById(`${sectionId}-section`).classList.remove('hidden');
-            
+
             if (sectionId === 'orders') {
                 displayOrders();
             } else if (sectionId === 'analytics') {
@@ -999,14 +1173,14 @@ Total: $${order.total.toFixed(2)}
             }
 
             customersTableBody.innerHTML = customers.map(customer => `
-                <tr>
-                    <td class="px-6 py-4 text-sm text-gray-900">${customer.name}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${customer.email}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${customer.orders.length}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">$${customer.totalSpent.toFixed(2)}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocaleDateString() : 'N/A'}</td>
+                <tr class="border-b dark:border-gray-700 transition-colors duration-200">
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${customer.name}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${customer.email}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${customer.orders.length}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">$${customer.totalSpent.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocaleDateString() : 'N/A'}</td>
                     <td class="px-6 py-4 text-sm font-medium">
-                        <button onclick="viewCustomerDetails('${customer.id}')" class="text-blue-600 hover:text-blue-800">
+                        <button onclick="viewCustomerDetails('${customer.id}')" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                             <i class="fas fa-eye"></i> View Details
                         </button>
                     </td>
@@ -1066,28 +1240,28 @@ Last Order: ${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocale
             }
 
             postsTableBody.innerHTML = posts.map(post => `
-                <tr>
+                <tr class="border-b dark:border-gray-700 transition-colors duration-200">
                     <td class="px-6 py-4">
                         <div class="flex items-center">
                             <img src="${post.image}" alt="${post.title}" class="w-16 h-16 object-cover rounded">
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">${post.title}</div>
-                                <div class="text-sm text-gray-500">${post.content.substring(0, 50)}...</div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">${post.title}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">${post.content.substring(0, 50)}...</div>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${post.category}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${new Date(post.date).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${post.category}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">${new Date(post.date).toLocaleDateString()}</td>
                     <td class="px-6 py-4 text-sm">
-                        <span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
                             Published
                         </span>
                     </td>
                     <td class="px-6 py-4 text-sm font-medium">
-                        <button onclick="editBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800 mr-2">
+                        <button onclick="editBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mr-2">
                             <i class="fas fa-edit"></i> Edit
                         </button>
-                        <button onclick="deleteBlogPost(${post.id})" class="text-red-600 hover:text-red-800">
+                        <button onclick="deleteBlogPost(${post.id})" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
                             <i class="fas fa-trash"></i> Delete
                         </button>
                     </td>
@@ -1107,9 +1281,9 @@ Last Order: ${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocale
         }
 
         // Add new blog post
-        document.getElementById('add-blog-post-form').addEventListener('submit', function(e) {
+        document.getElementById('add-blog-post-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const posts = getBlogPosts();
             const newPost = {
                 id: Math.max(...posts.map(p => p.id), 0) + 1,
@@ -1155,13 +1329,13 @@ Last Order: ${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocale
         }
 
         // Update blog post
-        document.getElementById('edit-blog-post-form').addEventListener('submit', function(e) {
+        document.getElementById('edit-blog-post-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const postId = parseInt(document.getElementById('edit-post-id').value);
             const posts = getBlogPosts();
             const postIndex = posts.findIndex(p => p.id === postId);
-            
+
             if (postIndex !== -1) {
                 posts[postIndex] = {
                     ...posts[postIndex],
@@ -1190,4 +1364,5 @@ Last Order: ${customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocale
         }
     </script>
 </body>
-</html> 
+
+</html>

@@ -37,11 +37,11 @@ function addProduct(product) {
     // Generate new ID
     const newId = Math.max(...products.map(p => p.id), 0) + 1;
     product.id = newId;
-    
+
     // Add default values if not provided
     if (!product.rating) product.rating = 0;
     if (!product.reviews) product.reviews = [];
-    
+
     products.push(product);
     saveProducts();
     return newId;
@@ -115,14 +115,14 @@ function displayProducts(containerId, productsToShow) {
     }
 
     container.innerHTML = productsToShow.map(product => `
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transition-colors duration-200">
             <img src="${product.images[0]}" alt="${product.title}" class="w-full h-48 object-cover">
             <div class="p-4">
-                <h3 class="text-lg font-semibold">${product.title}</h3>
-                <p class="text-gray-600">$${product.price.toFixed(2)}</p>
+                <h3 class="text-lg font-semibold dark:text-white">${product.title}</h3>
+                <p class="text-gray-600 dark:text-gray-400">$${product.price.toFixed(2)}</p>
                 <div class="flex items-center mt-2">
                     ${generateStarRating(product.rating)}
-                    <span class="ml-2 text-gray-600">(${product.reviews.length} reviews)</span>
+                    <span class="ml-2 text-gray-600 dark:text-gray-400">(${product.reviews.length} reviews)</span>
                 </div>
                 <button onclick="addToCart(${product.id})" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                     Add to Cart
@@ -182,14 +182,14 @@ function displayProductDetails(productId) {
     const reviewsContainer = document.getElementById('reviews-container');
     if (reviewsContainer) {
         reviewsContainer.innerHTML = product.reviews.map(review => `
-            <div class="border-b pb-4">
+            <div class="border-b dark:border-gray-700 pb-4">
                 <div class="flex items-center mb-2">
                     <div class="flex items-center">
                         ${generateStarRating(review.rating)}
                     </div>
-                    <span class="ml-2 font-semibold">${review.user}</span>
+                    <span class="ml-2 font-semibold dark:text-gray-200">${review.user}</span>
                 </div>
-                <p class="text-gray-600">${review.comment}</p>
+                <p class="text-gray-600 dark:text-gray-400">${review.comment}</p>
             </div>
         `).join('');
     }

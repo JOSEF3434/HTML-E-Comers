@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - E-Commerce Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 dark:bg-dark-bg dark:text-gray-100 transition-colors duration-200">
     <!-- Navigation (Same as other pages) -->
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white dark:bg-dark-card shadow-lg transition-colors duration-200">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-gray-800">ShopNow</a>
+                    <a href="index.html" class="text-2xl font-bold text-gray-800 dark:text-white">ShopNow</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-800 hover:text-blue-600">Home</a>
-                    <a href="shop.html" class="text-gray-800 hover:text-blue-600">Shop</a>
-                    <a href="blog.html" class="text-gray-800 hover:text-blue-600">Blog</a>
-                    <a href="about.html" class="text-gray-800 hover:text-blue-600">About</a>
-                    <a href="contact.html" class="text-gray-800 hover:text-blue-600">Contact</a>
+                    <a href="index.html" class="text-gray-800 dark:text-white hover:text-blue-600">Home</a>
+                    <a href="shop.html" class="text-gray-800 dark:text-white hover:text-blue-600">Shop</a>
+                    <a href="blog.html" class="text-gray-800 dark:text-white hover:text-blue-600">Blog</a>
+                    <a href="about.html" class="text-gray-800 dark:text-white hover:text-blue-600">About</a>
+                    <a href="contact.html" class="text-gray-800 dark:text-white hover:text-blue-600">Contact</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="cart.html" class="text-gray-800 hover:text-blue-600">
+                    <button id="theme-toggle"
+                        class="text-gray-800 dark:text-white hover:text-blue-600 transition-colors">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
+                    <a href="cart.html" class="text-gray-800 dark:text-white hover:text-blue-600">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cart-count" class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs">0</span>
                     </a>
-                    <a href="login.html" id="login-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
-                    <a href="admin/dashboard.html" id="dashboard-btn" class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Dashboard</a>
-                    <button id="logout-btn" class="hidden bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+                    <a href="login.html" id="login-btn"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
+                    <a href="admin/dashboard.html" id="dashboard-btn"
+                        class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Dashboard</a>
+                    <button id="logout-btn"
+                        class="hidden bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
                 </div>
             </div>
         </div>
@@ -41,15 +51,15 @@
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Sidebar -->
             <div class="w-full md:w-64">
-                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-                    <h3 class="text-lg font-semibold mb-4">Categories</h3>
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 mb-6 transition-colors duration-200">
+                    <h3 class="text-lg font-semibold mb-4 dark:text-white">Categories</h3>
                     <div id="blog-categories" class="space-y-2">
                         <!-- Categories will be loaded dynamically -->
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Recent Posts</h3>
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-6 transition-colors duration-200">
+                    <h3 class="text-lg font-semibold mb-4 dark:text-white">Recent Posts</h3>
                     <div id="recent-posts" class="space-y-4">
                         <!-- Recent posts will be loaded dynamically -->
                     </div>
@@ -65,9 +75,12 @@
                 <!-- Pagination -->
                 <div class="flex justify-center mt-8">
                     <nav class="flex items-center space-x-2">
-                        <button onclick="changePage('prev')" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Previous</button>
-                        <span id="current-page" class="px-4 py-2 border rounded-lg bg-blue-600 text-white">1</span>
-                        <button onclick="changePage('next')" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Next</button>
+                        <button onclick="changePage('prev')"
+                            class="px-4 py-2 border dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Previous</button>
+                        <span id="current-page"
+                            class="px-4 py-2 border dark:border-gray-600 rounded-lg bg-blue-600 text-white">1</span>
+                        <button onclick="changePage('next')"
+                            class="px-4 py-2 border dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Next</button>
                     </nav>
                 </div>
             </div>
@@ -75,7 +88,7 @@
     </div>
 
     <!-- Footer (Same as other pages) -->
-    <footer class="bg-gray-800 text-white mt-12">
+    <footer class="bg-gray-800 dark:bg-black text-white mt-12">
         <div class="max-w-6xl mx-auto px-4 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
@@ -112,7 +125,6 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
     <script>
         // Blog Functions
         let currentPage = 1;
@@ -142,7 +154,7 @@
             const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
 
             // Filter posts by category if one is selected
-            const filteredPosts = currentCategory 
+            const filteredPosts = currentCategory
                 ? sortedPosts.filter(post => post.category === currentCategory)
                 : sortedPosts;
 
@@ -155,37 +167,37 @@
             if (paginatedPosts.length === 0) {
                 blogPostsContainer.innerHTML = `
                     <div class="col-span-2 text-center py-8">
-                        <p class="text-gray-500">No blog posts available yet.</p>
+                        <p class="text-gray-500 dark:text-gray-400">No blog posts available yet.</p>
                     </div>
                 `;
             } else {
                 blogPostsContainer.innerHTML = paginatedPosts.map(post => {
                     const userHasRated = post.productId ? hasUserRated(post.productId) : false;
                     return `
-                        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <article class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transition-colors duration-200">
                             <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
                             <div class="p-6">
-                                <div class="flex items-center text-sm text-gray-600 mb-2">
+                                <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
                                     <span>${post.category}</span>
                                     <span class="mx-2">•</span>
                                     <span>${new Date(post.date).toLocaleDateString()}</span>
                                 </div>
-                                <h2 class="text-xl font-bold mb-2">${post.title}</h2>
-                                <p class="text-gray-600 mb-4">${post.content.substring(0, 150)}...</p>
+                                <h2 class="text-xl font-bold mb-2 dark:text-white">${post.title}</h2>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">${post.content.substring(0, 150)}...</p>
                                 <div class="flex justify-between items-center">
-                                    <button onclick="viewBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800">
+                                    <button onclick="viewBlogPost(${post.id})" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                                         Read More <i class="fas fa-arrow-right ml-1"></i>
                                     </button>
                                     ${post.productId ? `
                                         <div class="flex items-center space-x-4">
                                             <div class="flex items-center">
-                                                <span id="product-rating-${post.productId}" class="mr-2">0.0 ★</span>
+                                                <span id="product-rating-${post.productId}" class="mr-2 dark:text-white">0.0 ★</span>
                                                 ${!userHasRated ? `
-                                                    <button onclick="showRatingModal(${post.productId})" class="text-blue-600 hover:text-blue-800">
+                                                    <button onclick="showRatingModal(${post.productId})" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                                                         <i class="fas fa-star"></i> Rate
                                                     </button>
                                                 ` : `
-                                                    <span class="ml-2 text-gray-500">(You rated)</span>
+                                                    <span class="ml-2 text-gray-500 dark:text-gray-400">(You rated)</span>
                                                 `}
                                             </div>
                                             <a href="product.html?id=${post.productId}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
@@ -222,19 +234,19 @@
 
             categoriesContainer.innerHTML = `
                 <div class="flex justify-between items-center py-2">
-                    <a href="#" onclick="filterByCategory(null)" class="text-gray-600 hover:text-blue-600 ${!currentCategory ? 'font-bold text-blue-600' : ''}">
+                    <a href="#" onclick="filterByCategory(null)" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 ${!currentCategory ? 'font-bold text-blue-600' : ''}">
                         All Posts
                     </a>
-                    <span class="bg-gray-100 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded">
+                    <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">
                         ${sortedPosts.length}
                     </span>
                 </div>
                 ${Object.entries(categories).map(([category, count]) => `
                     <div class="flex justify-between items-center py-2">
-                        <a href="#" onclick="filterByCategory('${category}')" class="text-gray-600 hover:text-blue-600 ${currentCategory === category ? 'font-bold text-blue-600' : ''}">
+                        <a href="#" onclick="filterByCategory('${category}')" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 ${currentCategory === category ? 'font-bold text-blue-600' : ''}">
                             ${category}
                         </a>
-                        <span class="bg-gray-100 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded">
+                        <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">
                             ${count}
                         </span>
                     </div>
@@ -245,11 +257,11 @@
             const recentPosts = sortedPosts.slice(0, 5);
 
             recentPostsContainer.innerHTML = recentPosts.map(post => `
-                <div class="flex items-center space-x-4 py-3 cursor-pointer hover:bg-gray-50 rounded-lg p-2" onclick="viewBlogPost(${post.id})">
+                <div class="flex items-center space-x-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg p-2 transition-colors duration-200" onclick="viewBlogPost(${post.id})">
                     <img src="${post.image}" alt="${post.title}" class="w-16 h-16 object-cover rounded">
                     <div>
-                        <h4 class="text-sm font-semibold mb-1">${post.title}</h4>
-                        <p class="text-gray-500 text-xs">${new Date(post.date).toLocaleDateString()}</p>
+                        <h4 class="text-sm font-semibold mb-1 dark:text-white">${post.title}</h4>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs">${new Date(post.date).toLocaleDateString()}</p>
                     </div>
                 </div>
             `).join('');
@@ -267,7 +279,7 @@
         function changePage(direction) {
             const posts = getBlogPosts();
             const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
-            const filteredPosts = currentCategory 
+            const filteredPosts = currentCategory
                 ? sortedPosts.filter(post => post.category === currentCategory)
                 : sortedPosts;
             const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -284,30 +296,30 @@
         function viewBlogPost(postId) {
             const posts = getBlogPosts();
             const post = posts.find(p => p.id === postId);
-            
+
             if (post) {
                 const modal = document.createElement('div');
                 modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
                 modal.innerHTML = `
-                    <div class="bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="bg-white dark:bg-dark-card rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto transition-colors duration-200">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-2xl font-bold">${post.title}</h3>
-                            <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                            <h3 class="text-2xl font-bold dark:text-white">${post.title}</h3>
+                            <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="Close modal">
                                 <i class="fas fa-times text-xl"></i>
                             </button>
                         </div>
                         <img src="${post.image}" alt="${post.title}" class="w-full h-64 object-cover rounded-lg mb-6">
-                        <div class="flex items-center text-sm text-gray-600 mb-4">
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
                             <span>${post.category}</span>
                             <span class="mx-2">•</span>
                             <span>${new Date(post.date).toLocaleDateString()}</span>
                         </div>
-                        <div class="prose max-w-none">
+                        <div class="prose dark:prose-invert max-w-none dark:text-gray-300">
                             ${post.content}
                         </div>
                         ${post.productId ? `
-                            <div class="mt-6 pt-6 border-t">
-                                <h4 class="text-lg font-semibold mb-4">Related Product</h4>
+                            <div class="mt-6 pt-6 border-t dark:border-gray-700">
+                                <h4 class="text-lg font-semibold mb-4 dark:text-white">Related Product</h4>
                                 <div class="flex items-center justify-between">
                                     <a href="product.html?id=${post.productId}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
                                         View Product
@@ -326,10 +338,10 @@
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
             modal.innerHTML = `
-                <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                <div class="bg-white dark:bg-dark-card rounded-lg p-8 max-w-md w-full transition-colors duration-200">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-2xl font-bold">Rate Product</h3>
-                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700" title="Close modal">
+                        <h3 class="text-2xl font-bold dark:text-white">Rate Product</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="Close modal">
                             <i class="fas fa-times text-xl"></i>
                         </button>
                     </div>
@@ -341,7 +353,7 @@
                                 </button>
                             `).join('')}
                         </div>
-                        <p class="text-center text-gray-600">Click on a star to rate this product</p>
+                        <p class="text-center text-gray-600 dark:text-gray-400">Click on a star to rate this product</p>
                     </div>
                 </div>
             `;
@@ -352,40 +364,40 @@
         function submitRating(productId, rating) {
             const products = JSON.parse(localStorage.getItem('products')) || [];
             const productIndex = products.findIndex(p => p.id === productId);
-            
+
             if (productIndex !== -1) {
                 const product = products[productIndex];
                 const currentRating = product.rating || 0;
                 const ratingCount = product.ratingCount || 0;
-                
+
                 // Calculate new average rating
                 const newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
-                
+
                 products[productIndex] = {
                     ...product,
                     rating: newRating,
                     ratingCount: ratingCount + 1
                 };
-                
+
                 localStorage.setItem('products', JSON.stringify(products));
-                
+
                 // Save user rating
                 const userRatings = getUserRatings();
                 userRatings[productId] = rating;
                 localStorage.setItem('userRatings', JSON.stringify(userRatings));
-                
+
                 // Update rating display
                 const ratingElement = document.getElementById(`product-rating-${productId}`);
                 if (ratingElement) {
                     ratingElement.textContent = `${newRating.toFixed(1)} ★`;
                 }
-                
+
                 // Close modal
                 document.querySelector('.fixed').remove();
-                
+
                 // Show success message
                 alert('Thank you for rating this product!');
-                
+
                 // Refresh display
                 displayBlogPosts();
             }
@@ -396,5 +408,8 @@
             displayBlogPosts();
         });
     </script>
+    <script src="js/main.js"></script>
+    <script src="js/theme-toggle.js"></script>
 </body>
-</html> 
+
+</html>

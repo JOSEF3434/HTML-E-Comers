@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - E-Commerce Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 dark:bg-dark-card transition-colors duration-200">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white dark:bg-dark-card shadow-lg transition-colors duration-200">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-gray-800">ShopNow</a>
+                    <a href="index.html" class="text-2xl font-bold text-gray-800 dark:text-white">ShopNow</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-800 hover:text-blue-600">Home</a>
-                    <a href="shop.html" class="text-gray-800 hover:text-blue-600">Shop</a>
-                    <a href="blog.html" class="text-gray-800 hover:text-blue-600">Blog</a>
-                    <a href="about.html" class="text-gray-800 hover:text-blue-600">About</a>
-                    <a href="contact.html" class="text-gray-800 hover:text-blue-600">Contact</a>
+                    <a href="index.html" class="text-gray-800 dark:text-white hover:text-blue-600">Home</a>
+                    <a href="shop.html" class="text-gray-800 dark:text-white hover:text-blue-600">Shop</a>
+                    <a href="blog.html" class="text-gray-800 dark:text-white hover:text-blue-600">Blog</a>
+                    <a href="about.html" class="text-gray-800 dark:text-white hover:text-blue-600">About</a>
+                    <a href="contact.html" class="text-gray-800 dark:text-white hover:text-blue-600">Contact</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="cart.html" class="text-gray-800 hover:text-blue-600">
+                    <button id="theme-toggle"
+                        class="text-gray-800 dark:text-white hover:text-blue-600 transition-colors">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
+                    <a href="cart.html" class="text-gray-800 dark:text-white hover:text-blue-600">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cart-count" class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs">0</span>
                     </a>
-                    <a href="login.html" id="login-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
-                    <a href="admin/dashboard.html" id="dashboard-btn" class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Dashboard</a>
-                    <button id="logout-btn" class="hidden bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+                    <a href="login.html" id="login-btn"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
+                    <a href="admin/dashboard.html" id="dashboard-btn"
+                        class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Dashboard</a>
+                    <button id="logout-btn"
+                        class="hidden bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
                 </div>
             </div>
         </div>
@@ -40,7 +50,8 @@
     <div class="max-w-6xl mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Filters Sidebar -->
-            <div class="w-full md:w-64 bg-white p-4 rounded-lg shadow">
+            <div
+                class="w-full md:w-64 bg-white dark:bg-dark-bg dark:text-gray-200 p-4 rounded-lg shadow transition-colors duration-200">
                 <h3 class="text-lg font-semibold mb-4">Filters</h3>
                 <div class="space-y-4">
                     <div>
@@ -93,10 +104,11 @@
             <!-- Products Section -->
             <div class="flex-1">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold">All Products</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">All Products</h2>
                     <div class="flex items-center space-x-4">
-                        <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
-                        <select id="sort-select" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <label for="sort-select" class="text-sm font-medium text-gray-800 dark:text-white">Sort by:</label>
+                        <select id="sort-select"
+                            class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             <option value="default">Default</option>
                             <option value="price-asc">Price: Low to High</option>
                             <option value="price-desc">Price: High to Low</option>
@@ -110,35 +122,37 @@
                 </div>
                 <!-- Pagination -->
                 <div class="flex justify-center items-center space-x-4 mt-8">
-                    <button onclick="changePage('prev')" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Previous</button>
-                    <span>Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-                    <button onclick="changePage('next')" class="px-4 py-2 border rounded-lg hover:bg-gray-100">Next</button>
+                    <button onclick="changePage('prev')"
+                        class="px-4 py-2 border rounded-lg text-gray-800 dark:text-white hover:bg-gray-100">Previous</button>
+                    <span class="text-gray-800 dark:text-white">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+                    <button onclick="changePage('next')"
+                        class="px-4 py-2 border rounded-lg hover:bg-gray-100 text-gray-800 dark:text-white">Next</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-12">
+    <footer class="bg-gray-300 dark:bg-black text-gray-800 dark:text-white mt-12">
         <div class="max-w-6xl mx-auto px-4 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4">ShopNow</h3>
-                    <p class="text-gray-400">Your one-stop shop for all your needs.</p>
+                    <p class="text-gray-800 dark:text-white">Your one-stop shop for all your needs.</p>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
-                        <li><a href="shop.html" class="text-gray-400 hover:text-white">Shop</a></li>
-                        <li><a href="blog.html" class="text-gray-400 hover:text-white">Blog</a></li>
-                        <li><a href="about.html" class="text-gray-400 hover:text-white">About</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="index.html" class="text-gray-800 dark:text-white hover:text-white">Home</a></li>
+                        <li><a href="shop.html" class="text-gray-800 dark:text-white hover:text-white">Shop</a></li>
+                        <li><a href="blog.html" class="text-gray-800 dark:text-white hover:text-white">Blog</a></li>
+                        <li><a href="about.html" class="text-gray-800 dark:text-white hover:text-white">About</a></li>
+                        <li><a href="contact.html" class="text-gray-800 dark:text-white hover:text-white">Contact</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
-                    <ul class="space-y-2 text-gray-400">
+                    <ul class="space-y-2 text-gray-800 dark:text-white">
                         <li>Email: info@shopnow.com</li>
                         <li>Phone: (123) 456-7890</li>
                         <li>Address: 123 Shopping St, Retail City</li>
@@ -147,9 +161,9 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-800 dark:text-white hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-800 dark:text-white hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-800 dark:text-white hover:text-white"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -157,6 +171,7 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/theme-toggle.js"></script>
     <script>
         // Shop Functions
         let currentPage = 1;
@@ -191,21 +206,21 @@
 
             // Apply category filter
             if (selectedCategories.length > 0) {
-                filteredProducts = filteredProducts.filter(product => 
+                filteredProducts = filteredProducts.filter(product =>
                     selectedCategories.includes(product.category)
                 );
             }
 
             // Apply rating filter
             if (selectedRating > 0) {
-                filteredProducts = filteredProducts.filter(product => 
+                filteredProducts = filteredProducts.filter(product =>
                     (product.rating || 0) >= selectedRating
                 );
             }
 
             // Apply price range filter
-            filteredProducts = filteredProducts.filter(product => 
-                product.price >= selectedPriceRange.min && 
+            filteredProducts = filteredProducts.filter(product =>
+                product.price >= selectedPriceRange.min &&
                 product.price <= selectedPriceRange.max
             );
 
@@ -253,15 +268,15 @@
                     const userHasRated = hasUserRated(product.id);
                     const productImage = product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/300x200?text=No+Image';
                     return `
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg overflow-hidden transition-colors duration-200">
                             <img src="${productImage}" alt="${product.title}" class="w-full h-48 object-cover">
                             <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2">${product.title}</h3>
-                                <p class="text-gray-600 mb-4">${product.description || ''}</p>
+                                <h3 class="text-xl font-bold mb-2 dark:text-white">${product.title}</h3>
+                                <p class="text-gray-600 dark:text-gray-800 dark:text-white mb-4">${product.description || ''}</p>
                                 <div class="flex justify-between items-center mb-4">
                                     <span class="text-2xl font-bold text-blue-600">$${product.price.toFixed(2)}</span>
                                     <div class="flex items-center">
-                                        <span class="mr-2">${(product.rating || 0).toFixed(1)} ★</span>
+                                        <span class="mr-2 dark:text-gray-300">${(product.rating || 0).toFixed(1)} ★</span>
                                         ${!userHasRated ? `
                                             <button onclick="showRatingModal(${product.id})" class="text-blue-600 hover:text-blue-800">
                                                 <i class="fas fa-star"></i> Rate
@@ -289,7 +304,7 @@
             const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
             const currentPageElement = document.getElementById('current-page');
             const totalPagesElement = document.getElementById('total-pages');
-            
+
             if (currentPageElement) currentPageElement.textContent = currentPage;
             if (totalPagesElement) totalPagesElement.textContent = totalPages;
         }
@@ -377,30 +392,30 @@
         function submitRating(productId, rating) {
             const products = getProducts();
             const productIndex = products.findIndex(p => p.id === productId);
-            
+
             if (productIndex !== -1) {
                 const product = products[productIndex];
                 const currentRating = product.rating || 0;
                 const ratingCount = product.ratingCount || 0;
-                
+
                 // Calculate new average rating
                 const newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
-                
+
                 products[productIndex] = {
                     ...product,
                     rating: newRating,
                     ratingCount: ratingCount + 1
                 };
-                
+
                 localStorage.setItem('products', JSON.stringify(products));
                 saveUserRating(productId, rating);
-                
+
                 // Close modal
                 document.querySelector('.fixed').remove();
-                
+
                 // Show success message
                 alert('Thank you for rating this product!');
-                
+
                 // Refresh display
                 displayFilteredProducts();
             }
@@ -411,7 +426,7 @@
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const products = getProducts();
             const product = products.find(p => p.id === productId);
-            
+
             if (product) {
                 const existingItem = cart.find(item => item.id === productId);
                 if (existingItem) {
@@ -425,7 +440,7 @@
                         quantity: 1
                     });
                 }
-                
+
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartCount();
                 alert('Product added to cart!');
@@ -444,4 +459,5 @@
         updateCartCount();
     </script>
 </body>
-</html> 
+
+</html>
